@@ -51,10 +51,10 @@ export default function SideBar() {
                     <hr></hr>
                     <ul className="">
                         <li>
-                            <Link className={`${list}`} href=""><BiSolidDashboard className='text-2xl'/><div className={`transition-all overflow-hidden ${isShow? "w-fit px-4 ": "w-0"}`}>Dashboard</div></Link>
+                            <Link className={`${list}`} href=""><BiSolidDashboard className='text-2xl'/><div className={`transition-all overflow-hidden ${isShow? "w-40 px-4 ": "w-0"}`}>Dashboard</div></Link>
                         </li>
                         <li>
-                            <Link className={`${list}`} href=""><BiGroup className='text-2xl' /><div className={`transition-all overflow-hidden ${isShow? "w-fit px-4": "w-0"}`}>Employees</div></Link>
+                            <Link className={`${list}`} href=""><BiGroup className='text-2xl' /><div className={`transition-all overflow-hidden ${isShow? "w-40 px-4": "w-0"}`}>Employees</div></Link>
                         </li>
                     </ul>
                 </nav>
