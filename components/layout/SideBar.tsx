@@ -21,11 +21,31 @@ import { Button } from '@mui/material';
 export default function SideBar() {
     const [isShow, setIsShow] = useState<boolean>(false)
 
+    const routes = [
+        {
+            name: "Dashboard" ,
+            icon: <BiSolidDashboard className='text-2xl'/>,
+            link: "/dashboard"
+        },
+        {
+            name: "Employees" ,
+            icon: <BiGroup className='text-2xl' />,
+            link: "/employees"
+        }
+    ]
+
     return (
         <div className='h-screen'>
             <aside className={`w-fit h-full bg-white overflow-hidden`}>
                 <nav>
-                    <div className="flex justify-end">
+                    <div className="flex justify-between h-16 items-center">
+                        <Link href="">
+                            <Image
+                                src={BitverseLogo}
+                                alt="Bitverse Logo"
+                                className={`overflow-hidden transition-all ${isShow ? 'w-32 pl-8' : 'w-0'}`}
+                            />
+                        </Link>
                         {isShow 
                             ?   <Button onClick={() => setIsShow(curr => !curr)}>
                                     <BiChevronLeft 
@@ -40,22 +60,19 @@ export default function SideBar() {
                                 </Button>
                         }
                     </div>
-                    <Link className={`${list}`} href="">
-                        <Image
-                            src={BitverseLogo}
-                            alt="Bitverse Logo"
-                            className={`overflow-hidden transition-all ${isShow ? 'w-32' : 'w-0'}`}
-                        />
-                    </Link>
 
                     <hr></hr>
                     <ul className="">
-                        <li>
-                            <Link className={`${list}`} href=""><BiSolidDashboard className='text-2xl'/><div className={`transition-all overflow-hidden ${isShow? "w-40 px-4 ": "w-0"}`}>Dashboard</div></Link>
-                        </li>
-                        <li>
-                            <Link className={`${list}`} href=""><BiGroup className='text-2xl' /><div className={`transition-all overflow-hidden ${isShow? "w-40 px-4": "w-0"}`}>Employees</div></Link>
-                        </li>
+                        {routes.map((route:any, index:number) => (
+                            <li key={index}>
+                                <Link className={`${list}`} href={route.link}>
+                                    {route.icon}
+                                    <div className={`transition-all overflow-hidden ${isShow? "w-40 px-4 ": "w-0"}`}>
+                                        {route.name}
+                                    </div>
+                                </Link>
+                            </li>
+                        ))}
                     </ul>
                 </nav>
             </aside>

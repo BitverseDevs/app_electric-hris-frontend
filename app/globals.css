@@ -31,3 +31,8 @@ body {
     text-wrap: balance;
   }
 }
+
+table th, td {
+  @apply p-4
+}
+

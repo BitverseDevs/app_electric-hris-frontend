@@ -33,7 +33,7 @@ export default function Header() {
     ]
 
     return (
-        <div className="p-4 bg-slate-100 w-full flex justify-end">
+        <div className="bg-slate-100 h-16 w-full flex items-center justify-end">
             
             <div>
                 <Button 
