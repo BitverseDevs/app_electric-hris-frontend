@@ -18,17 +18,22 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const isAuthenticated = true
+  
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="flex">
-          <SideBar />
-          <div className="w-full">
-            <Header />
-              {children}
-            {/* <Footer /> */}
+        {isAuthenticated &&
+          <div className="flex">
+            <SideBar />
+            <div className="w-full">
+              <Header />
+                {children}
+              {/* <Footer /> */}
+            </div>
           </div>
-        </div>
+        }
       </body>
     </html>
   );

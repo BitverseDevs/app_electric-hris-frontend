@@ -36,3 +36,15 @@ table th, td {
   @apply p-4
 }
 
+tr:nth-child(even) {
+  @apply bg-slate-200
+}
+
+thead {
+  @apply border-b border-slate-500
+}
+
+.table-wrapper {
+  @apply p-4 bg-white rounded-sm shadow-2xl w-fit m-auto mt-20
+}
+
