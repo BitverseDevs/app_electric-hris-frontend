@@ -16,7 +16,7 @@ import {
 import BitverseLogo from '@/assets/bitverse-logo.png'
 import BitverseLogoHead from '@/assets/bitverse-logo-head.png'
 import { useState } from 'react';
-import { Button } from '@mui/material';
+import { Button } from 'antd';
 
 export default function SideBar() {
     const [isShow, setIsShow] = useState<boolean>(false)
@@ -47,13 +47,13 @@ export default function SideBar() {
                             />
                         </Link>
                         {isShow 
-                            ?   <Button onClick={() => setIsShow(curr => !curr)}>
+                            ?   <Button type="link" onClick={() => setIsShow(curr => !curr)}>
                                     <BiChevronLeft 
                                         className='text-3xl text-slate-500 hover:text-blue-600'
                                     />
                                 </Button>
                             :
-                                <Button onClick={() => setIsShow(curr => !curr)}>
+                                <Button type="link" onClick={() => setIsShow(curr => !curr)}>
                                     <BiChevronRight
                                         className='text-3xl text-slate-500 hover:text-blue-600'
                                     />

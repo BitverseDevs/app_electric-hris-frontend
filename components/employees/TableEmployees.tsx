@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Link } from "@mui/material"
+import Link from "next/link";
 import { useState } from "react";
 
 export default function TableEmployees(props:any) {
@@ -8,16 +8,9 @@ export default function TableEmployees(props:any) {
     //PROPS
     const {columns, rows} = props
 
-    //STATE
-    const [open, setOpen] = useState(false);
-
-    //FUNCTIONS
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-
     return (
         <div className="table-wrapper">
-            <Link href="/employees/add-new-employee">Add New Employee</Link>
+            <Link className="bg-blue-500 p-2 text-white rounded-md" href="/employees/add-new-employee">Add New Employee</Link>
             <table className="mt-8">
                 <thead>
                     <tr>

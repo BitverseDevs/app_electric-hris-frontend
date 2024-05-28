@@ -1,69 +1,49 @@
 "use client";
 
-import { Avatar, Box, Button, Grow, ListItemIcon, ListItemText, Menu, MenuItem, MenuList, Paper, Popper } from "@mui/material";
+import { Avatar, Button, Dropdown, Menu, MenuProps, Space } from "antd";
+import { UserOutlined } from '@ant-design/icons';
 import { useRef, useState } from "react";
 import { BiFace } from "react-icons/bi";
 
 export default function Header() {
     
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
-
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-      setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-      setAnchorEl(null);
-    };
-
-    const list = [
+    const items: MenuProps['items'] = [
         {
-            id: "profile",
-            title: "Profile"
+          key: '1',
+          label: (
+            <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+              Profile
+            </a>
+          ),
         },
         {
-            id: "account",
-            title: "Account"
+          key: '2',
+          label: (
+            <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+              Account
+            </a>
+          ),
         },
         {
-            id: "logout",
-            title: "Logout"
+          key: '3',
+          label: (
+            <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
+              Logout
+            </a>
+          ),
         }
-    ]
+      ];
 
     return (
-        <div className="bg-slate-100 h-16 w-full flex items-center justify-end">
-            
+        <div className="bg-slate-100 h-16 w-full flex items-center justify-end px-4">
             <div>
-                <Button 
-                     id="avatar"
-                    //  aria-controls={open ? 'demo-positioned-menu' : undefined}
-                    //  aria-haspopup="true"
-                    //  aria-expanded={open ? 'true' : undefined}
-                     onClick={handleClick}
-                >
-                    <Avatar>H</Avatar>
-                </Button>
-                <Menu
-                    id="avatar"
-                    aria-labelledby="avatar"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'left',
-                    }}
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'left',
-                    }}
-                >
-                    {list.map((item, index) => (
-                        <MenuItem key={index} onClick={handleClose}>{item.title}</MenuItem>
-                    ))}
-                </Menu>
+                <Dropdown className="cursor-pointer" menu={{ items }}  trigger={['click']}>
+                    <a onClick={(e) => e.preventDefault()}>
+                    <Space>
+                        <Avatar size="large" icon={<UserOutlined />} />
+                    </Space>
+                    </a>
+                </Dropdown>
             </div>
         </div>
     )

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "@/app/globals.css";
 import SideBar from "@/components/layout/SideBar";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -18,15 +18,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-  const isAuthenticated = true
   
   return (
-    <html lang="en">
-      <body className={inter.className}>
-          {children}
-          {/* <Footer /> */}
-      </body>
-    </html>
+    <div className={inter.className}>
+        <div className="flex">
+            <SideBar />
+            <div className="w-full">
+                <Header />
+                {children}
+                {/* <Footer /> */}
+            </div>
+        </div>
+    </div>
   );
 }

@@ -1,9 +1,12 @@
+"use client";
+
+import Autocomplete from "@/components/forms/Autocomplete";
+
 export default function Login() {
     return (
         <div>
             <form>
-                <label>Username</label>
-                <input type="text" />
+                <Autocomplete />
             </form>
         </div>
     )
