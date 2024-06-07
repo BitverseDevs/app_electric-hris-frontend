@@ -306,7 +306,6 @@ export default function PersonalInformation() {
                             <Input
                                 name="mobile_number" 
                                 placeholder='09123456789'
-                                type="number"
                                 maxLength={11}
                                 onChange={handleChangePersonalData}
                             />
