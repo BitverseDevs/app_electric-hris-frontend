@@ -4,6 +4,8 @@ import { Button, Form, Input, Select, Space, DatePicker } from 'antd';
 import { PersonalData } from '@/types';
 import type { DatePickerProps } from 'antd';
 
+import "@/app/globals.css";
+
 
 export default function PersonalInformation() {
 

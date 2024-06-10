@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "@/app/globals.css";
-
-
-const inter = Inter({ subsets: ["latin"] });
+import SigninHeader from "@/components/signin-layout/SigninHeader";
+import { Poppins } from "next/font/google";
 
 export const metadata: Metadata = {
   title: "HRIS",
@@ -17,9 +15,10 @@ export default function RootLayout({
 }>) {
   
   return (
-      <div className="h-screen">
+      <body className="bg-red-100">
+        <SigninHeader />
             {children}
-      </div>
+      </body>
 
   );
 }
