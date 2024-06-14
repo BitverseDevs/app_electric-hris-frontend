@@ -1,6 +1,12 @@
+
+"use client"
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function SigninHeader() {
+
+    const pathname = usePathname()
 
     const routes = [
         {
@@ -19,7 +25,7 @@ export default function SigninHeader() {
                 <ul className="flex gap-4 justify-center">
                     {routes.map((item:any, index:number) => (
                         <li key={index}>
-                            <Link className="text-slate-200 hover:text-white" href={item.link}>{item.label}</Link>
+                            <Link className={`${pathname === item.link ? 'text-white ' : 'text-slate-300 hover:text-white'} font-semibold`} href={item.link}>{item.label}</Link>
                         </li>
                     ))}
                 </ul>

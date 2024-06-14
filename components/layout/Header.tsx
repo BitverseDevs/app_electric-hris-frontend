@@ -4,8 +4,11 @@ import { Avatar, Button, Dropdown, Menu, MenuProps, Space } from "antd";
 import { UserOutlined } from '@ant-design/icons';
 import { useRef, useState } from "react";
 import { BiFace } from "react-icons/bi";
+import useAuth from "@/hooks/use-auth";
 
 export default function Header() {
+
+    const { logout } = useAuth()
     
     const items: MenuProps['items'] = [
         {
@@ -27,13 +30,12 @@ export default function Header() {
         {
           key: '3',
           label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
+            <button onClick={() => logout()}>
               Logout
-            </a>
+            </button>
           ),
         }
       ];
-
     return (
         <div className="bg-slate-100 h-16 w-full flex items-center justify-end px-4">
             <div>

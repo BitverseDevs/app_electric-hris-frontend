@@ -1,15 +1,32 @@
 import type { NextRequest } from 'next/server'
  
 export function middleware(request: NextRequest) {
-//   const currentUser = request.cookies.get('currentUser')?.value
-  const currentUser = true
+
+  const guestPath = ['/login', '/about']
+  const currentPath = request.nextUrl.pathname
+  const accessToken = request.cookies.get('access_token')?.value
  
-  if (currentUser && !request.nextUrl.pathname.startsWith('/')) {
-    return Response.redirect(new URL('/', request.url))
-  }
- 
-  if (!currentUser && !request.nextUrl.pathname.startsWith('/login')) {
-    return Response.redirect(new URL('/login', request.url))
+  // if (accessToken && !request.nextUrl.pathname.startsWith('/')) {
+  //   return Response.redirect(new URL('/', request.url))
+  // }
+  console.log(request.url)
+  if (!accessToken) {
+
+    // If the current path is not in the allowed paths, redirect to the login page
+    if (!guestPath.includes(currentPath)) {
+
+      return Response.redirect(new URL('/login', request.url))
+
+    }
+
+  } else {
+
+    if (guestPath.includes(currentPath)) {
+
+      return Response.redirect(new URL('/', request.url))
+
+    }
+
   }
 }
  

@@ -1,30 +1,47 @@
 "use client";
 
-import { Poppins } from "next/font/google";
-
-import { Button, Card, Col, Form, FormProps, Input, Row, Typography } from "antd";
-
-
-const { Title } = Typography;
-
-// import Autocomplete from "@/components/forms/Autocomplete";
-const poppins = Poppins(
-    { 
-      subsets: ["latin"],
-      weight: ['400']
-    }
-  );
+import useAuth from "@/hooks/use-auth";
+import { Button, Card, Col, Form, FormProps, Input, Row, Typography, message } from "antd";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
 
+    // NEXTJS
+    const router = useRouter()
+
+    // LIBRARIES
+    const [messageApi, contextHolder] = message.useMessage();
+    const { Title } = Typography;
     const [form] = Form.useForm();
 
+    // HOOKS
+    const { login } = useAuth()
+
     const onFinish: FormProps['onFinish'] = (values) => {
-        console.log('Success:', values);
+
+        login(values)
+            .then(res =>
+                (res == undefined || res == null) && error("Something Went Wrong")
+            )
+            .catch(err => {
+                if(err.response?.status == "401") {
+                    error("Wrong Username or Password")
+                } else {
+                    error("Something Went Wrong")
+                }
+            })
+    };
+
+    const error = (errorMessage:string) => {
+        messageApi.open({
+          type: 'error',
+          content: errorMessage,
+        });
     };
 
     return (
         <div className="flex md:flex-row flex-col h-screen bg-purple-900">
+            {contextHolder}
             <div className="md:h-full p-8 md:w-1/2">
                 <div className="h-full grid content-center">
                     <h1 className="text-white text-2xl text-center h-fit">APP ELECTRIC HRIS</h1>
@@ -71,6 +88,7 @@ export default function Login() {
                             >
                                 <Input
                                     name="password" 
+                                    type="password"
                                     // onChange={handleChangePersonalData}
                                 />
                             </Form.Item>

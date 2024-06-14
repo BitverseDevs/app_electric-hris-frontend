@@ -5,7 +5,6 @@ import SideBar from "@/components/layout/SideBar";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -25,8 +24,8 @@ export default function RootLayout({
             <SideBar />
             <div className="w-full">
                 <Header />
-                {children}
-                {/* <Footer /> */}
+                  {children}
+                  {/* <Footer /> */}
             </div>
         </div>
     </div>

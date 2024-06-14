@@ -13,12 +13,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
+
   return (
-      <body className="bg-red-100">
+      <div>
         <SigninHeader />
             {children}
-      </body>
+      </div>
 
   );
 }
