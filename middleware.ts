@@ -4,12 +4,13 @@ export function middleware(request: NextRequest) {
 
   const guestPath = ['/login', '/about']
   const currentPath = request.nextUrl.pathname
-  const accessToken = request.cookies.get('access_token')?.value
+  const accessToken = process.env.NEXT_APP_STATUS=="development"? "abc" : request.cookies.get('access_token')?.value
  
   // if (accessToken && !request.nextUrl.pathname.startsWith('/')) {
   //   return Response.redirect(new URL('/', request.url))
   // }
-  console.log(request.url)
+
+
   if (!accessToken) {
 
     // If the current path is not in the allowed paths, redirect to the login page
