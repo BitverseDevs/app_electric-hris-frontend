@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Col, FormProps, Row, Typography } from 'antd';
 import { Button, Form, Input, Select, Space, DatePicker } from 'antd';
-import { PersonalData } from '@/types';
+import { EmployeeDetails } from '@/types';
 import type { DatePickerProps } from 'antd';
 
+interface Props {
+    employeeDetails: EmployeeDetails
+    setEmployeeDetails: any
+}
 
-import "@/app/globals.css";
-
-
-export default function PersonalInformation() {
+export default function Personal(props: Props) {
 
     const { Text, Link, Title} = Typography;
 
+    const {employeeDetails, setEmployeeDetails} = props
+
     //STATES
-    const [personalData, setPersonalData] = useState<PersonalData>(
+    const [personalData, setPersonalData] = useState<EmployeeDetails>(
         {
             first_name: '',
             middle_name: '',
@@ -34,7 +37,7 @@ export default function PersonalInformation() {
     //FUNCTIONS
     const handleChangePersonalData = (e:any) => {
 
-        setPersonalData((curr:PersonalData) => (
+        setPersonalData((curr:EmployeeDetails) => (
             {
                 ...curr,
                 [e.target.name]: e.target.value
@@ -44,7 +47,7 @@ export default function PersonalInformation() {
 
     const handleSelectChange = (name:string, value:string | number | null) => {
         if(value) {
-            setPersonalData((curr:PersonalData) => (
+            setPersonalData((curr:EmployeeDetails) => (
                 {
                     ...curr,
                     [name]: value
@@ -54,7 +57,7 @@ export default function PersonalInformation() {
     }
 
     const handleDateChange = (name:string, date: Date, dateString:string | string[] | null) => {
-        setPersonalData((curr:PersonalData) => (
+        setPersonalData((curr:EmployeeDetails) => (
             {
                 ...curr,
                 [name]: dateString
@@ -63,7 +66,21 @@ export default function PersonalInformation() {
     }
 
     const onFinish: FormProps['onFinish'] = (values) => {
-        console.log('Success:', values);
+        console.table(values);
+        setEmployeeDetails((curr:any) => ({
+            ...curr,
+            first_name: values.first_name,
+            middle_name: values.middle_name,
+            last_name: values.last_name,
+            suffix: values.suffix,
+            birth_date: values.birth_date,
+            sex: values.sex,
+            civil_status: values.civil_status,
+            spouse_first_name: values.spouse_first_name,
+            spouse_middle_name: values.spouse_middle_name,
+            spouse_last_name: values.spouse_last_name,
+            spouse_suffix: values.spouse_suffix,
+        }))
     };
     
     return (
@@ -134,7 +151,7 @@ export default function PersonalInformation() {
                         <Col xs={24} sm={12} md={8} lg={4}>
                             <Form.Item 
                                 name="suffix" 
-                                label="Name Suffix:" 
+                                label="Suffix:" 
                             >
                                 <Input 
                                     name="suffix" 
@@ -409,8 +426,8 @@ export default function PersonalInformation() {
                     </Row>
 
                     <Form.Item>
-                        <Button type="primary" htmlType="submit">
-                            Submit
+                        <Button type="primary" htmlType="submit" className='mt-4'>
+                            Save
                         </Button>
                     </Form.Item>
                 </Form>

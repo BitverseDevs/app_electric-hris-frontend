@@ -59,3 +59,7 @@ thead {
 .table-wrapper {
   @apply p-4 bg-white rounded-sm shadow-2xl w-fit m-auto mt-20
 }
+
+.card {
+  @apply shadow-2xl w-full p-4 rounded-sm border-2 border-purple-300
+}

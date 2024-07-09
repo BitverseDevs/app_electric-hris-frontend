@@ -1,4 +1,4 @@
-export interface PersonalData {
+export interface EmployeeDetails {
     first_name: string | null,
     middle_name: string | null,
     last_name: string | null,

@@ -1,38 +1,88 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { Select, Space, Tabs } from 'antd';
-import PersonalInformation from '@/components/add-employee/PersonalInformation';
+import { Button, Select, Space, Tabs } from 'antd';
+import Personal from '@/components/employees/Personal';
 import type { TabsProps } from 'antd';
+import Payroll from '@/components/employees/Payroll';
+import GovernmentContribution from '@/components/employees/GovernmentContribution';
 
 export default function AddNewEmployee() {
 
     const [currSection, setCurrSection] = useState<string>('personal-info');
+
+    const [employeeDetails, setEmployeeDetails] = useState({
+      first_name: null,
+      middle_name: null,
+      last_name: null,
+      suffix: null,
+      birth_date: null,
+      sex: null,
+      civil_status: null,
+      spouse_first_name: null,
+      spouse_middle_name: null,
+      spouse_last_name: null,
+      spouse_suffix: null,
+      mobile_number: null,
+      email_address: null,
+      emerg_contact_person: null,
+      emerg_contact_number: null,
+      sss_no: null,
+      philhealth_no: null,
+      pagibig_no: null
+    })
+
+    const isRequireFieldFilled: boolean = 
+      employeeDetails.first_name && 
+      employeeDetails.middle_name &&
+      employeeDetails.last_name &&
+      employeeDetails.suffix &&
+      employeeDetails.birth_date && 
+      employeeDetails.sex &&
+      employeeDetails.civil_status &&
+      employeeDetails.spouse_first_name &&
+      employeeDetails.spouse_middle_name &&
+      employeeDetails.spouse_last_name &&
+      employeeDetails.spouse_suffix &&
+      employeeDetails.mobile_number &&
+      employeeDetails.emerg_contact_person &&
+      employeeDetails.emerg_contact_number ? true : false
+
     
-    const handleChange = (value: string) => {
+    const handleChangeKey = (value: string) => {
         setCurrSection(curr => value)
     };
 
-    const onChange = (key: string) => {
-        console.log(key);
-      };
       
       const items: TabsProps['items'] = [
         {
           key: '1',
           label: 'Personal Information',
-          children: <PersonalInformation />,
+          children: 
+            <Personal
+              employeeDetails={employeeDetails}
+              setEmployeeDetails={setEmployeeDetails}
+            />,
         },
         {
           key: '2',
           label: 'Payroll Information',
-          children: 'Content of Tab Pane 2',
+          children: 
+            <Payroll 
+              employeeDetails={employeeDetails}
+              setEmployeeDetails={setEmployeeDetails}
+            />,
         },
         {
           key: '3',
-          label: 'Family Background',
-          children: 'Content of Tab Pane 3',
+          label: 'Government Contribution',
+          children: 
+            <GovernmentContribution
+              employeeDetails={employeeDetails}
+              setEmployeeDetails={setEmployeeDetails}
+            />,
         },
+
         
       ];
 
@@ -41,10 +91,21 @@ export default function AddNewEmployee() {
 
           {/* center this div */}
           <div className='w-full md:max-w-6xl bg-white p-4 shadow-xl'>
+            
+            <Button 
+              type="primary" 
+              htmlType="submit" 
+              disabled={!isRequireFieldFilled}
+              className='my-4'
+            >
+              Submit Employee Information
+            </Button>
+
             <Tabs 
-              defaultActiveKey="1"  
+              defaultActiveKey="3"  
+              // activeKey={currSection}
               items={items} 
-              onChange={onChange}
+              onChange={handleChangeKey}
               className='w-full'
             />
           </div>
