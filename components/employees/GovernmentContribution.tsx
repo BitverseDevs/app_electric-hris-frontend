@@ -3,7 +3,7 @@ import { Button, Col, Form, FormProps, Input, InputNumber, Row, Typography } fro
 import { useRef, useState } from "react";
 import SSS from "./government-contributions/SSS";
 import Pagibig from "./government-contributions/Pagibig";
-import Philhealth from "./government-contributions/philhealth";
+import Philhealth from "./government-contributions/Philhealth";
 import Tax from "./government-contributions/Tax";
 
 interface Props {

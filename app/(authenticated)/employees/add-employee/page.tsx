@@ -6,6 +6,7 @@ import Personal from '@/components/employees/Personal';
 import type { TabsProps } from 'antd';
 import Payroll from '@/components/employees/Payroll';
 import GovernmentContribution from '@/components/employees/GovernmentContribution';
+import BIR from '@/components/employees/government-contributions/BIR';
 
 export default function AddNewEmployee() {
 
@@ -82,27 +83,38 @@ export default function AddNewEmployee() {
               setEmployeeDetails={setEmployeeDetails}
             />,
         },
+        {
+          key: '4',
+          label: 'BIR',
+          children: 
+            <BIR
+              employeeDetails={employeeDetails}
+              setEmployeeDetails={setEmployeeDetails}
+            />,
+        },
 
         
       ];
 
     return (
-        <div className='p-4 w-full flex justify-center'>
+        <div className='w-full p-4 flex justify-center'>
 
           {/* center this div */}
-          <div className='w-full md:max-w-6xl bg-white p-4 shadow-xl'>
+          <div 
+            className='w-full md:max-w-6xl bg-white p-4 shadow-xl overflow-y-auto h-full'
+            >
             
             <Button 
               type="primary" 
               htmlType="submit" 
               disabled={!isRequireFieldFilled}
-              className='my-4'
+              className='my-4 wrap'
             >
               Submit Employee Information
             </Button>
 
             <Tabs 
-              defaultActiveKey="3"  
+              defaultActiveKey="1"  
               // activeKey={currSection}
               items={items} 
               onChange={handleChangeKey}

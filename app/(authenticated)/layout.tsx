@@ -22,42 +22,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   
+
   return (
-    // <div className={`${inter.className} bg-red-100`}>
-    //     <div className="flex">
-    //         <SideBar />
-    //         {/* <div className="p-96">
-    //           sdsdasd
-    //         </div> */}
-    //         <div className="w-full">
-    //             <Header />
-    //             {/* <div className="w-full bg-blue-100">
-    //               asdas
-    //             </div> */}
-    //             <Suspense fallback={<Loading />}>
-    //               {children}
-    //             </Suspense>
-    //               {/* <Footer /> */}
-    //         </div>
-    //     </div>
-    // </div>
 
-
-    <div className="flex w-screen">
-      <SideBar />
-      {/* <div className="p-96">
-        sdsdasd
-      </div> */}
-      <div className="w-full">
+    <div className="flex">
+        <SideBar />
+        <div className="h-screen w-full overflow-y-auto">
           <Header />
-          {/* <div className="w-full bg-blue-100">
-            asdas
-          </div> */}
           <Suspense fallback={<Loading />}>
             {children}
           </Suspense>
-            {/* <Footer /> */}
-      </div>
+        </div>
     </div>
 
 

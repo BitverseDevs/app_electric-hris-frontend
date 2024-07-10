@@ -10,7 +10,9 @@ import { BiChevronLeft, BiChevronRight, BiGroup, BiSolidDashboard } from "react-
 import BitverseLogo from '@/assets/bitverse-logo.png';
 import { MenuProps } from 'antd/lib/menu';
 import { useStore } from '@/store';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import SidebarMobile from './sidebar/SidebarMobile';
+import SidebarDesktop from './sidebar/SidebarDesktop';
 
 interface RoutesTypes {
     name: string,
@@ -30,7 +32,6 @@ export default function SideBar() {
 
     const sideBarRef = useRef(null)
 
-    const router = useRouter()
 
     // Routes and menu items
     const routes: RoutesTypes[] = [
@@ -83,94 +84,14 @@ export default function SideBar() {
         });
     };
 
-    const handleSideBar = (e:any) => {
-        if(e.target === sideBarRef.current){
-            setShowSideBar(false)
-        }
-    }
-
-    const onClick: MenuProps['onClick'] = (e) => {
-
-        console.log(e)
-        if(e.key == "employees") router.push('/employees')
-        if(e.key == "dashboard") router.push('/employees')
-    };
-
     return (
-        <>
+        <div className=''>
             {screenSize.width > 640 ? (
-                <div className='h-screen'>
-                    {/* Sidebar content for larger screens */}
-                    <aside className={`h-full bg-white overflow-hidden`}>
-                        <nav>
-                            <div className="flex justify-between h-16 items-center">
-                                <Link href="">
-                                    <Image
-                                        src={BitverseLogo}
-                                        alt="Bitverse Logo"
-                                        className={`overflow-hidden transition-all ${showSideBar ? 'w-32 pl-8' : 'w-0'}`}
-                                    />
-                                </Link>
-                                {showSideBar
-                                    ? <Button type="link" onClick={() => setShowSideBar(!showSideBar)}>
-                                        <BiChevronLeft
-                                            className='text-3xl text-slate-500 hover:text-blue-600'
-                                        />
-                                    </Button>
-                                    : <Button type="link" onClick={() => setShowSideBar(!showSideBar)}>
-                                        <BiChevronRight
-                                            className='text-3xl text-slate-500 hover:text-blue-600'
-                                        />
-                                    </Button>
-                                }
-                            </div>
-
-                            <hr></hr>
-                            <ul className="">
-                                {routes.map((route: any, index: number) => (
-                                    <li key={index}>
-                                        <Link className="flex p-4" href={route.link}>
-                                            <span>{route.icon}</span>
-                                            <div className={`transition-all overflow-hidden ${showSideBar ? "w-40 px-4 " : "w-0"}`}>
-                                                {route.name}
-                                            </div>
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </nav>
-                    </aside>
-                </div>
+               <SidebarDesktop routes={routes}/>
             ) : (
-                // Portal for smaller screens (client-side only)
-                createPortal(
-                    <div ref={sideBarRef} onClick={handleSideBar} className={`h-screen transition-all bg-slate-300 bg-opacity-30 top-0 fixed z-10 overflow-hidden ${showSideBar ? "w-full": "w-0"}` }>
-                        <div className={`bg-white w-fit h-full`}>
-                            <div className='flex justify-end p-2'>
-                                <IoClose onClick={() => setShowSideBar(false)} className='text-2xl'/>
-                            </div>
-                            <div className=''>
-                                <Link href="">
-                                    <Image
-                                        src={BitverseLogo}
-                                        alt="Bitverse Logo"
-                                        className='w-32 pl-8'
-                                        // className={`overflow-hidden transition-all ${showSideBar ? 'w-32 pl-8' : 'w-0'}`}
-                                    />
-                                </Link>
-                            </div>
-                            <Menu
-                                mode="inline"
-                                style={{ width: 250 }}
-                                onClick={onClick}
-                                items={items}
-                            />
-                        </div>
-                    </div>
-                    ,document.body
-                )
+                <SidebarMobile routes={routes}/>
             )}
-        </>
+        </div>
     );
 };
 

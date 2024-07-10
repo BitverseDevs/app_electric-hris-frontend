@@ -7,7 +7,7 @@ interface ScreenSize {
 export const useStore = create((set) => ({
 
     // STATE
-    showSideBar: false,
+    showSideBar: true,
     screenSize: {
         width: 0,
         height: 0

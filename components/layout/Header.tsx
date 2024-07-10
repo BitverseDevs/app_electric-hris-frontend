@@ -43,7 +43,7 @@ export default function Header() {
         }
       ];
     return (
-        <div className="bg-slate-100 h-16 w-full flex items-center justify-between md:justify-end px-4">
+        <div className="bg-slate-100 h-16 w-full sticky z-10 top-0 flex items-center justify-between md:justify-end px-4">
             {
               screenSize.width <= 640 &&
               <GiHamburgerMenu onClick={() => setShowSideBar(true)}/>

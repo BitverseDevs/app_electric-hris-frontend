@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Col, FormProps, Row, Typography } from 'antd';
+import { Card, Col, FormProps, message, Row, Typography, Upload } from 'antd';
 import { Button, Form, Input, Select, Space, DatePicker } from 'antd';
 import { EmployeeDetails } from '@/types';
-import type { DatePickerProps } from 'antd';
+import type { DatePickerProps, GetProp, UploadFile, UploadProps } from 'antd';
+import ProfilePicture from './personal-information/ProfilePicture';
 
 interface Props {
     employeeDetails: EmployeeDetails
@@ -84,7 +85,7 @@ export default function Personal(props: Props) {
     };
     
     return (
-        <div className='w-full'>
+        <div>
             <Title level={3}>Personal Information</Title>
             <div id="form-wrapper" className='my-10'>
                 <Form
@@ -94,6 +95,9 @@ export default function Personal(props: Props) {
                     onFinish={onFinish}
                 >
                     <Row gutter={16}>
+                        <Col span={24}>
+                            <ProfilePicture />
+                        </Col>
                         <Col xs={24} sm={12} md={8} lg={4}>
                             <Form.Item 
                                 name="first_name" 
@@ -317,15 +321,16 @@ export default function Personal(props: Props) {
                                         message: 'Please input Mobile Number' 
                                     },
                                     {
-                                        pattern: /^[0-9]{11}$/,
-                                        message: 'Please enter a valid 11-digit mobile number'
+                                        pattern: /^[0-9]{10}$/,
+                                        message: 'Please enter a valid 10-digit mobile number'
                                     }
                                 ]}
                             >
                                 <Input
+                                    addonBefore="+63"
                                     name="mobile_number"
-                                    placeholder='09123456789'
-                                    maxLength={11}
+                                    placeholder='9123456789'
+                                    maxLength={10}
                                     onChange={handleChangePersonalData}
                                 />
                             </Form.Item>
@@ -383,15 +388,16 @@ export default function Personal(props: Props) {
                                                 message: 'Please input Contact Number' 
                                             },
                                             {
-                                                pattern: /^[0-9]{11}$/,
-                                                message: 'Please enter a valid 11-digit mobile number'
+                                                pattern: /^[0-9]{10}$/,
+                                                message: 'Please enter a valid 10-digit mobile number'
                                             }
                                         ]}
                                     >
                                         <Input
+                                            addonBefore="+63"
                                             name="emerg_mobile_number" 
-                                            placeholder='09123456789'
-                                            maxLength={11}
+                                            placeholder='9123456789'
+                                            maxLength={10}
                                             onChange={handleChangePersonalData}
                                         />
                                     </Form.Item>
