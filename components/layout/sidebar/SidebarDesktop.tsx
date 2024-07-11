@@ -19,7 +19,7 @@ export default function SidebarDesktop(props:any) {
     };
 
     return (
-        <div className={`h-screen w-[300px] z-20`}>
+        <div className={`h-screen w-[280px] z-20`}>
             {/* Sidebar content for larger screens */}
             <aside className={`h-full w-full  bg-white`}>
                 <nav>

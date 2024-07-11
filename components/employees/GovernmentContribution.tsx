@@ -5,6 +5,7 @@ import SSS from "./government-contributions/SSS";
 import Pagibig from "./government-contributions/Pagibig";
 import Philhealth from "./government-contributions/Philhealth";
 import Tax from "./government-contributions/Tax";
+import { formatTextToNumber } from "@/utils/format-text";
 
 interface Props {
     employeeDetails: EmployeeDetails
@@ -28,12 +29,8 @@ export default function GovernmentContribution (props:Props) {
 
     const handleChange = (changedValues: any, allValues: any) => {
 
-        Object.keys(changedValues).forEach((name) => {
-            if (['sss_number', 'pagibig_number'].includes(name)) {
-                // Replace any non-digit characters with an empty string
-                form.setFieldsValue({ [name]: changedValues[name].replace(/[^\d]+/g, '') });
-            }
-        });
+        formatTextToNumber(['sss_number', 'pagibig_number'], changedValues, form)
+
     }
 
 

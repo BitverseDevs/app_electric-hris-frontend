@@ -1,6 +1,7 @@
 import { PlusOutlined, LoadingOutlined } from '@ant-design/icons';
 import { GetProp, message, Upload, UploadProps } from 'antd';
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function ProfilePicture() {
 
@@ -38,7 +39,8 @@ export default function ProfilePicture() {
 
     const handleChange: UploadProps['onChange'] = (info) => {
 
-        console.log(info.file.status)
+
+        console.log(info.file)
         if (info.file.status === 'uploading') {
             setLoading(true);
             return;
@@ -53,7 +55,10 @@ export default function ProfilePicture() {
 
         if (info.file.status === 'error') {
             // Get this url from response in real world.
-            setLoading(false);
+            getBase64(info.file.originFileObj as FileType, (url) => {
+                setLoading(false);
+                setImageUrl(url);
+            });
             message.error('Something went wrong');
         }
     };
@@ -65,21 +70,32 @@ export default function ProfilePicture() {
         </button>
     );
 
-    const action = (file:any) => {
-        console.log(file)
-        return "hello"
-    }
+    const customRequest = ({ file, onSuccess, onError }: any) => {
+        // Prevent the default upload behavior
+        console.log('Custom request:', file);
+        onSuccess(null, file); // Simulate successful upload
+    };
+
+
     return (                        
         <Upload
             name="avatar"
             listType="picture-circle"
             className="avatar-uploader"
             showUploadList={false}
-            action={action}
+            // action={action}
             beforeUpload={beforeUpload}
             onChange={handleChange}
+            customRequest={customRequest}
         >
-            {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+            {imageUrl ? 
+                <img
+                    src={imageUrl} 
+                    alt="avatar" 
+                    className='h-full w-full rounded-full'
+                />
+                : uploadButton
+            }
         </Upload>
     )
 }

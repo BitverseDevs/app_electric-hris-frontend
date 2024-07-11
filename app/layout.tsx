@@ -7,6 +7,7 @@ import Footer from "@/components/layout/Footer";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { CookiesProvider } from "next-client-cookies/server";
 import { ConfigProvider, Typography } from "antd";
+import 'antd/dist/reset.css';
 
 
 const poppins = Poppins(

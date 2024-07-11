@@ -11,3 +11,19 @@ export interface EmployeeDetails {
     spouse_last_name: string | null,
     spouse_suffix: string | null,
 }
+
+export interface PreviousEmployer {
+    key: string | number
+    company_name: string,
+    tin: number,
+    address: string,
+    zip_code: number
+}
+
+export interface FamilyMembers {
+    first_name: string
+    middle_name: string
+    last_name: string
+    occupation: string
+    birth_date: Date
+}

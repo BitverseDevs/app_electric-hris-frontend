@@ -6,7 +6,9 @@ import Personal from '@/components/employees/Personal';
 import type { TabsProps } from 'antd';
 import Payroll from '@/components/employees/Payroll';
 import GovernmentContribution from '@/components/employees/GovernmentContribution';
-import BIR from '@/components/employees/government-contributions/BIR';
+import BIR from '@/components/employees/BIR';
+import FamilyBackground from '@/components/employees/FamilyBackground';
+import EmploymentHistory from '@/components/employees/EmploymentHistory';
 
 export default function AddNewEmployee() {
 
@@ -55,46 +57,64 @@ export default function AddNewEmployee() {
     };
 
       
-      const items: TabsProps['items'] = [
-        {
-          key: '1',
-          label: 'Personal Information',
-          children: 
-            <Personal
-              employeeDetails={employeeDetails}
-              setEmployeeDetails={setEmployeeDetails}
-            />,
-        },
-        {
-          key: '2',
-          label: 'Payroll Information',
-          children: 
-            <Payroll 
-              employeeDetails={employeeDetails}
-              setEmployeeDetails={setEmployeeDetails}
-            />,
-        },
-        {
-          key: '3',
-          label: 'Government Contribution',
-          children: 
-            <GovernmentContribution
-              employeeDetails={employeeDetails}
-              setEmployeeDetails={setEmployeeDetails}
-            />,
-        },
-        {
-          key: '4',
-          label: 'BIR',
-          children: 
-            <BIR
-              employeeDetails={employeeDetails}
-              setEmployeeDetails={setEmployeeDetails}
-            />,
-        },
+    const items: TabsProps['items'] = [
+      {
+        key: '1',
+        label: 'Personal Information',
+        children: 
+          <Personal
+            employeeDetails={employeeDetails}
+            setEmployeeDetails={setEmployeeDetails}
+          />,
+      },
+      {
+        key: '2',
+        label: 'Payroll Information',
+        children: 
+          <Payroll 
+            employeeDetails={employeeDetails}
+            setEmployeeDetails={setEmployeeDetails}
+          />,
+      },
+      {
+        key: '3',
+        label: 'Government Contribution',
+        children: 
+          <GovernmentContribution
+            employeeDetails={employeeDetails}
+            setEmployeeDetails={setEmployeeDetails}
+          />,
+      },
+      {
+        key: '4',
+        label: 'BIR',
+        children: 
+          <BIR
+            employeeDetails={employeeDetails}
+            setEmployeeDetails={setEmployeeDetails}
+          />,
+      },
+      {
+        key: '5',
+        label: 'Family Background',
+        children: 
+          <FamilyBackground
+            employeeDetails={employeeDetails}
+            setEmployeeDetails={setEmployeeDetails}
+          />,
+      },
+      {
+        key: '6',
+        label: 'Employment History',
+        children: 
+          <EmploymentHistory
+            employeeDetails={employeeDetails}
+            setEmployeeDetails={setEmployeeDetails}
+          />,
+      },
 
-        
-      ];
+      
+    ];
 
     return (
         <div className='w-full p-4 flex justify-center'>
@@ -114,7 +134,7 @@ export default function AddNewEmployee() {
             </Button>
 
             <Tabs 
-              defaultActiveKey="1"  
+              defaultActiveKey="6"  
               // activeKey={currSection}
               items={items} 
               onChange={handleChangeKey}
