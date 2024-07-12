@@ -1,7 +1,7 @@
 import { useStore } from "@/store";
 import { FamilyMembers, PreviousEmployer } from "@/types";
 import { formatTextToNumber } from "@/utils/format-text";
-import { Button, Form, Input } from "antd";
+import { Button, DatePicker, Form, Input } from "antd";
 import { FormProps, useForm } from "antd/es/form/Form";
 import dayjs from "dayjs";
 
@@ -19,6 +19,7 @@ export default function FormAddFamilyMember(props: Props) {
     const onFinish: FormProps['onFinish'] = (values) => {
         values = {
             key: dayjs().valueOf(),
+            birth_date: dayjs(values.birth_date).format('YYYY-MM-DD'),
             ...values
         }
         handleFormChange(values)
@@ -44,6 +45,7 @@ export default function FormAddFamilyMember(props: Props) {
                 <Form.Item 
                     name="first_name"
                     label="First Name:"
+                    className="md:w-36"
                     rules={
                         [
                             { 
@@ -58,6 +60,7 @@ export default function FormAddFamilyMember(props: Props) {
                 <Form.Item 
                     name="middle_name"
                     label="Middle Name:"
+                    className="md:w-36"
                     rules={
                         [
                             { 
@@ -71,6 +74,7 @@ export default function FormAddFamilyMember(props: Props) {
                 <Form.Item 
                     name="last_name"
                     label="Last Name:"
+                    className="md:w-36"
                     rules={
                         [
                             { 
@@ -84,7 +88,7 @@ export default function FormAddFamilyMember(props: Props) {
                 <Form.Item 
                     name="suffix"
                     label="Suffix:"
-                    className="w-20"
+                    className="md:w-20"
                     rules={
                         [
                             { 
@@ -96,8 +100,23 @@ export default function FormAddFamilyMember(props: Props) {
                     <Input />
                 </Form.Item>
                 <Form.Item 
+                    name="birth_date"
+                    label="Birth Date:"
+                    className="md:w-32"
+                    rules={
+                        [
+                            { 
+                                required: true 
+                            }
+                        ]
+                    }
+                >
+                    <DatePicker />
+                </Form.Item>
+                <Form.Item 
                     name="relationship"
                     label="Relationship"
+                    className="md:w-36"
                     rules={
                         [
                             { 

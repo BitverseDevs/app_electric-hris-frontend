@@ -43,6 +43,11 @@ export default function FamilyBackground (props:Props) {
             key: 'suffix',
         },
         {
+            title: 'Birth Date',
+            dataIndex: 'birthdate',
+            key: 'birthdate',
+        },
+        {
             title: 'Relationship',
             dataIndex: 'relationship',
             key: 'relationship',
