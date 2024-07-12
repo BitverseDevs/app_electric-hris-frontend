@@ -27,3 +27,13 @@ export interface FamilyMembers {
     occupation: string
     birth_date: Date
 }
+
+export interface RoutesTypes extends SubRoutesTypes {
+    sub: SubRoutesTypes[] | null | []
+}
+
+export interface SubRoutesTypes {
+    name: string,
+    icon: any,
+    link: string | "",
+}

@@ -90,7 +90,7 @@ export default function SidebarMobile (props:any) {
                                 <ul className="">
                                     {routes.map((route: any, index: number) => (
                                         <li className={`${isActiveRoute(route.link)? 'bg-blue-100':''}`} key={index}>
-                                            <Link className="flex gap-4 px-8 py-4" href={route.link}>
+                                            <Link className="flex gap-4 px-8 py-4" href={route.link} onClick={() => setShowSideBar(false)}>
                                                 <span>{route.icon}</span>
                                                 <div className={`transition-all overflow-hidden`}>
                                                     {route.name}

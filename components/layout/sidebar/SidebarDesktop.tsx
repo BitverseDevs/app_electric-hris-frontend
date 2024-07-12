@@ -4,23 +4,51 @@ import Image from 'next/image';
 import BitverseLogo from '@/assets/bitverse-logo.png';
 import { IoClose } from "react-icons/io5";
 import { usePathname, useRouter } from "next/navigation";
+import { Fragment, ReactElement, useState } from "react";
+import { RoutesTypes, SubRoutesTypes } from "@/types";
+import {BiChevronDown} from "react-icons/bi";
 
-export default function SidebarDesktop(props:any) {
+interface Props {
+    handleDropdownSub: (navLink:string) => void
+    routes: RoutesTypes[]
+}
+export default function SidebarDesktop(props:Props) {
 
-    const {routes} = props
-    const setShowSideBar = useStore((state: any) => state.setShowSideBar)
-    const showSideBar = useStore((state: any) => state.showSideBar)
-    
-    const router = useRouter()
+    const {routes, handleDropdownSub} = props
+    const navRoute = useStore((state: any) => state.navRoute)
+
+
+    const [showSub, setShowSub] = useState<boolean>(false)
     const pathname = usePathname()
     
     const isActiveRoute = (routeLink: string) => {
         return pathname.startsWith(routeLink);
     };
 
+    const subRoutesList = (subRoutes:SubRoutesTypes[], navLink:string | null): ReactElement  => {
+        return (
+            <ul className={`transition ease-in-out delay-1000 ${navRoute.current == navLink? 'h-fit': 'h-0'} overflow-hidden`}>
+                {
+                    Array.isArray(subRoutes) 
+                        && subRoutes.map((sub: any, index: number) => 
+                            <li className={`${isActiveRoute(sub.link)? 'bg-blue-100':''}`} key={index}>
+                                <Link className="flex gap-4 pl-20 py-4" href={sub.link}>
+                                    <span>{sub.icon}</span>
+                                    <div className={`transition-all overflow-hidden`}>
+                                        {sub.name}
+                                    </div>
+                                </Link>
+                            </li>
+                        ) 
+                        
+                }
+            </ul>
+        )
+    }
+
     return (
         <div className={`h-screen w-[280px] shadow-2xl z-20`}>
-            {/* Sidebar content for larger screens */}
+
             <aside className={`h-full w-full  bg-white`}>
                 <nav>
                     <div className="flex h-16 items-center">
@@ -31,31 +59,33 @@ export default function SidebarDesktop(props:any) {
                                 className={`w-32 pl-8`}
                             />
                         </Link>
-                        {/* {showSideBar
-                            ? <Button type="link" onClick={() => setShowSideBar(!showSideBar)}>
-                                <BiChevronLeft
-                                    className='text-3xl text-slate-500 hover:text-blue-600'
-                                />
-                            </Button>
-                            : <Button type="link" onClick={() => setShowSideBar(!showSideBar)}>
-                                <BiChevronRight
-                                    className='text-3xl text-slate-500 hover:text-blue-600'
-                                />
-                            </Button>
-                        } */}
+                        
                     </div>
 
                     <hr></hr>
+
                     <ul className="">
                         {routes.map((route: any, index: number) => (
-                            <li className={`${isActiveRoute(route.link)? 'bg-blue-100':''}`} key={index}>
-                                <Link className="flex gap-4 px-8 py-4" href={route.link}>
-                                    <span>{route.icon}</span>
-                                    <div className={`transition-all overflow-hidden`}>
-                                        {route.name}
-                                    </div>
-                                </Link>
-                            </li>
+                            <Fragment>
+                                <li 
+                                    className={`${(!Array.isArray(route.sub) || route.sub.length == 0) && isActiveRoute(route.link)? 'bg-blue-100':''} px-4 flex justify-between items-center cursor-pointer`} 
+                                    key={index} 
+                                    onClick={() => handleDropdownSub(route.link)}
+                                >
+                                    <Link 
+                                        className="flex gap-4 px-8 py-4" 
+                                        href={route.link}
+                                    >
+                                        <span>{route.icon}</span>
+                                        <div className={`transition-all overflow-hidden`}>
+                                            {route.name}
+                                        </div>
+                                    </Link>
+                                    
+                                    {route.sub && route.sub.length > 0 && <BiChevronDown className="text-2xl"/>}
+                                </li>
+                                {subRoutesList(route.sub, route.link)}
+                            </Fragment>
                         ))}
                     </ul>
                 </nav>
