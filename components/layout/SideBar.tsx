@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button, Menu } from 'antd';
@@ -60,6 +60,19 @@ export default function SideBar() {
         },
     ];
 
+    // const handleResize = () => {
+    //     setScreenSize({
+    //         width: window.innerWidth,
+    //         height: window.innerHeight,
+    //     });
+    // }
+    const handleResize = useCallback(() => {
+        setScreenSize({
+            width: window.innerWidth,
+            height: window.innerHeight,
+        });
+    },[setScreenSize])
+
     useEffect(() => {
 
         setScreenSize({
@@ -74,15 +87,7 @@ export default function SideBar() {
         return () => {
             window.removeEventListener('resize', handleResize);
         };
-    }, []);
-
-    const handleResize = () => {
-        // Update screen size state on resize
-        setScreenSize({
-            width: window.innerWidth,
-            height: window.innerHeight,
-        });
-    };
+    }, [handleResize, setScreenSize]);
 
     return (
         <div className=''>
