@@ -94,7 +94,7 @@ export default function Personal(props: Props) {
                     initialValues={{ remember: true }}
                     onFinish={onFinish}
                 >
-                    <Row gutter={16}>
+                    <Row gutter={[16,16]}>
                         <Col span={24}>
                             <ProfilePicture />
                         </Col>

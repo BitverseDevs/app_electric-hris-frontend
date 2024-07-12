@@ -1,5 +1,5 @@
 import { PlusOutlined, LoadingOutlined } from '@ant-design/icons';
-import { GetProp, message, Upload, UploadProps } from 'antd';
+import { Form, GetProp, message, Upload, UploadProps } from 'antd';
 import { useState } from 'react';
 import Image from 'next/image';
 
@@ -77,25 +77,37 @@ export default function ProfilePicture() {
     };
 
 
-    return (                        
-        <Upload
-            name="avatar"
-            listType="picture-circle"
-            className="avatar-uploader"
-            showUploadList={false}
-            // action={action}
-            beforeUpload={beforeUpload}
-            onChange={handleChange}
-            customRequest={customRequest}
+    return (   
+        <Form.Item
+            name="employee_image"
+            label="Profile Picture" 
+            rules={[
+                { 
+                    required: true,
+                    message: "Profile Picture is required"
+                },
+            ]}
         >
-            {imageUrl ? 
-                <img
-                    src={imageUrl} 
-                    alt="avatar" 
-                    className='h-full w-full rounded-full'
-                />
-                : uploadButton
-            }
-        </Upload>
+            <Upload
+                name="avatar"
+                listType="picture-circle"
+                className="avatar-uploader"
+                showUploadList={false}
+                // action={action}
+                beforeUpload={beforeUpload}
+                onChange={handleChange}
+                customRequest={customRequest}
+            >
+                {imageUrl ? 
+                    <img
+                        src={imageUrl} 
+                        alt="avatar" 
+                        className='h-full w-full rounded-full'
+                    />
+                    : uploadButton
+                }
+            </Upload>
+        </Form.Item>                     
+
     )
 }

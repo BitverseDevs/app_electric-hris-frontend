@@ -134,7 +134,7 @@ export default function AddNewEmployee() {
             </Button>
 
             <Tabs 
-              defaultActiveKey="6"  
+              defaultActiveKey="1"  
               // activeKey={currSection}
               items={items} 
               onChange={handleChangeKey}
