@@ -53,12 +53,12 @@ export default function SidebarDesktop(props:Props) {
                         {routes.map((route: any, index: number) => (
                             <Fragment key={index}>
                                 <li 
-                                    className={`${(!Array.isArray(route.sub) || route.sub.length == 0) && isActiveRoute(route.link)? 'bg-blue-100':''} px-4 flex justify-between items-center cursor-pointer transition-all hover:bg-blue-100`} 
+                                    className={`${(!Array.isArray(route.sub) || route.sub.length == 0) && isActiveRoute(route.link)? 'bg-blue-100':''} flex justify-between items-center cursor-pointer transition-all hover:bg-blue-100`} 
                                     key={index} 
                                     onClick={() => handleMenuIndex(index)}
                                 >
                                     <Link 
-                                        className="flex gap-4 px-8 py-4" 
+                                        className="flex gap-4 px-8 py-4 w-full" 
                                         href={route.link}
                                     >
                                         <span>{route.icon}</span>
