@@ -74,7 +74,7 @@ export default function SidebarMobile (props:any) {
                                 <hr></hr>
                                 <ul className="">
                                     {routes.map((route: any, index: number) => (
-                                        <Fragment>
+                                        <Fragment key={index}>
                                             <li 
                                                 className={`${(!Array.isArray(route.sub) || route.sub.length == 0) && isActiveRoute(route.link)? 'bg-blue-100' :''} px-4 flex justify-between items-center cursor-pointer transition-all hover:bg-blue-100`} 
                                                 key={index}
