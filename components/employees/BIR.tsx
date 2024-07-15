@@ -4,6 +4,7 @@ import { useForm } from "antd/es/form/Form";
 import FormAddPreviousEmployer from "./BIR/FormAddPreviousEmployer";
 import { useStore } from "@/store";
 import { useState } from "react";
+import CardList from "../CardList";
 
 interface Props {
     employeeDetails: EmployeeDetails
@@ -72,7 +73,7 @@ export default function BIR(props:Props) {
     return (
         <div >
             {
-                screenSize.width < 640 ?
+                screenSize.width < 768 ?
                     <div>
                         <Button type="primary" onClick={() => setModal("formAddPrevEmp", true)}>Add Previous Employer</Button>
                         <Modal 
@@ -91,7 +92,10 @@ export default function BIR(props:Props) {
 
             }
             
-            <Table dataSource={data} columns={columns} className="my-4"/>
+            <Table dataSource={data} columns={columns} className="my-4 hidden md:block"/>
+            <div className="md:hidden">
+                <CardList dataList={data} titleKey="company_name" excludeKeys={["key"]} />
+            </div>
             <Button type="primary" htmlType="submit" className='mt-4'>
                 Save
             </Button>

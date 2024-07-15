@@ -7,43 +7,26 @@ import { usePathname, useRouter } from "next/navigation";
 import { Fragment, ReactElement, useState } from "react";
 import { RoutesTypes, SubRoutesTypes } from "@/types";
 import {BiChevronDown} from "react-icons/bi";
+import SubMenu from "./SubMenu";
 
 interface Props {
-    handleDropdownSub: (navLink:string) => void
     routes: RoutesTypes[]
 }
 export default function SidebarDesktop(props:Props) {
 
-    const {routes, handleDropdownSub} = props
-    const navRoute = useStore((state: any) => state.navRoute)
+    const {routes} = props
 
-
-    const [showSub, setShowSub] = useState<boolean>(false)
+    const [currentMenuIndex, setCurrentMenuIndex] = useState<number | null>(null);
+    
     const pathname = usePathname()
     
     const isActiveRoute = (routeLink: string) => {
         return pathname.startsWith(routeLink);
     };
 
-    const subRoutesList = (subRoutes:SubRoutesTypes[], navLink:string | null): ReactElement  => {
-        return (
-            <ul className={`transition ease-in-out delay-1000 ${navRoute.current == navLink? 'h-fit': 'h-0'} overflow-hidden`}>
-                {
-                    Array.isArray(subRoutes) 
-                        && subRoutes.map((sub: any, index: number) => 
-                            <li className={`${isActiveRoute(sub.link)? 'bg-blue-100':''}`} key={index}>
-                                <Link className="flex gap-4 pl-20 py-4" href={sub.link}>
-                                    <span>{sub.icon}</span>
-                                    <div className={`transition-all overflow-hidden`}>
-                                        {sub.name}
-                                    </div>
-                                </Link>
-                            </li>
-                        ) 
-                        
-                }
-            </ul>
-        )
+    const handleMenuIndex = (index:number | null) => {
+        if (currentMenuIndex == index) setCurrentMenuIndex(currIndex => null)
+        else setCurrentMenuIndex((currIndex) => index)
     }
 
     return (
@@ -68,9 +51,9 @@ export default function SidebarDesktop(props:Props) {
                         {routes.map((route: any, index: number) => (
                             <Fragment>
                                 <li 
-                                    className={`${(!Array.isArray(route.sub) || route.sub.length == 0) && isActiveRoute(route.link)? 'bg-blue-100':''} px-4 flex justify-between items-center cursor-pointer`} 
+                                    className={`${(!Array.isArray(route.sub) || route.sub.length == 0) && isActiveRoute(route.link)? 'bg-blue-100':''} px-4 flex justify-between items-center cursor-pointer transition-all hover:bg-blue-100`} 
                                     key={index} 
-                                    onClick={() => handleDropdownSub(route.link)}
+                                    onClick={() => handleMenuIndex(index)}
                                 >
                                     <Link 
                                         className="flex gap-4 px-8 py-4" 
@@ -84,7 +67,11 @@ export default function SidebarDesktop(props:Props) {
                                     
                                     {route.sub && route.sub.length > 0 && <BiChevronDown className="text-2xl"/>}
                                 </li>
-                                {subRoutesList(route.sub, route.link)}
+                                <SubMenu 
+                                    subRoutes={route.sub} 
+                                    menuIndex={index} 
+                                    currentMenuIndex={currentMenuIndex} 
+                                />
                             </Fragment>
                         ))}
                     </ul>

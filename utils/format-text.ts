@@ -10,3 +10,10 @@ export const formatTextToNumber = (arrayKeys: string[], changedValues: any, form
         }
     });
 }
+
+export const capitalize = (str:string) => {
+    if (typeof str !== 'string' || str.length === 0) {
+        return str;
+    }
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}

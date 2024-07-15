@@ -1,5 +1,7 @@
+import Maintenance from "@/components/layout/Maintenance";
+
 export default function Categories () {
     return (
-        <div>Categories</div>
+        <Maintenance />
     )
 }

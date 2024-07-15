@@ -5,12 +5,13 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, InputRef, Pagination, Space, Table, TableColumnType, TableColumnsType, TableProps } from "antd";
 import type { FilterDropdownProps } from 'antd/es/table/interface';
 import { useRef, useState } from "react";
+import CardList from '../CardList';
 
 
 interface DataType {
     id: any;
     key: React.Key;
-    name: string;
+    full_name: string;
     age: number;
 }
 type DataIndex = keyof DataType;
@@ -184,11 +185,11 @@ export default function TableEmployees() {
             //   ],
         },
         {
-            title: 'Name',
-            dataIndex: 'name',
+            title: 'Full Name',
+            dataIndex: 'full_name',
             filterSearch: true,
             // onFilter: (value, record) => record.name.startsWith(value as string),
-            ...getColumnSearchProps('name'),
+            ...getColumnSearchProps('full_name'),
             width: '30%',
         },
         {
@@ -203,73 +204,73 @@ export default function TableEmployees() {
         {
             id: 1,
             key: '1',
-            name: 'John Brown',
+            full_name: 'John Brown',
             age: 32
         },
         {
             id: 2,
             key: '2',
-            name: 'Jim Green',
+            full_name: 'Jim Green',
             age: 42
         },
         {
             id: 3,
             key: '3',
-            name: 'Joe Black',
+            full_name: 'Joe Black',
             age: 32
         },
         {
             id: 4,
             key: '4',
-            name: 'Jim Red',
+            full_name: 'Jim Red',
             age: 32
         },
         {
             id: 5,
             key: '5',
-            name: 'John Brown',
+            full_name: 'John Brown',
             age: 32
         },
         {
             id: 6,
             key: '6',
-            name: 'Jim Green',
+            full_name: 'Jim Green',
             age: 42
         },
         {
             id: 7,
             key: '7',
-            name: 'Joe Black',
+            full_name: 'Joe Black',
             age: 32
         },
         {
             id: 8,
             key: '8',
-            name: 'Jim Red',
+            full_name: 'Jim Red',
             age: 32
         },
         {
             id: 9,
             key: '9',
-            name: 'John Brown',
+            full_name: 'John Brown',
             age: 32
         },
         {
             id: 10,
             key: '10',
-            name: 'Jim Green',
+            full_name: 'Jim Green',
             age: 42
         },
         {
             id: 11,
             key: '11',
-            name: 'Joe Black',
+            full_name: 'Joe Black',
             age: 32
         },
         {
             id: 12,
             key: '12',
-            name: 'Jim Red',
+            full_name: 'Jim Red',
             age: 32
         }
     ];
@@ -280,26 +281,36 @@ export default function TableEmployees() {
     
     return (
         <div className='mt-4'>
-            <Table 
-                pagination={
-                    {
-                        defaultCurrent: 1,
-                        pageSize: 5, 
-                        position: ["topCenter", "bottomCenter"],
-                        showSizeChanger: false,
-                        total: 100
+            <div className='hidden md:block'>
+                <Table 
+                    pagination={
+                        {
+                            defaultCurrent: 1,
+                            pageSize: 5, 
+                            position: ["topCenter", "bottomCenter"],
+                            showSizeChanger: false,
+                            total: 100
+                        }
                     }
-                }
-                columns={columns} 
-                dataSource={data} 
-                onChange={onChange}
-            />
+                    columns={columns} 
+                    dataSource={data} 
+                    onChange={onChange}
+                />
+            </div>
 
             {/* <Pagination 
                 defaultCurrent={1} 
                 pageSize={5}
                 total={50} 
             /> */}
+            
+            <div className='block md:hidden'>
+                <CardList 
+                    titleKey='name'
+                    dataList={data}
+                    excludeKeys={['id', 'key']}
+                />
+            </div>
         </div>
     )
 }   

@@ -19,8 +19,8 @@ export default function FormAddFamilyMember(props: Props) {
     const onFinish: FormProps['onFinish'] = (values) => {
         values = {
             key: dayjs().valueOf(),
+            ...values,
             birth_date: dayjs(values.birth_date).format('YYYY-MM-DD'),
-            ...values
         }
         handleFormChange(values)
         form.resetFields();

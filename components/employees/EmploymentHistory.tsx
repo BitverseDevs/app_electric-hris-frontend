@@ -4,6 +4,7 @@ import { Button, Form, Modal, Table, Tabs, TabsProps, Typography } from "antd";
 import { useState } from "react";
 import FormAddFamilyMember from "./family-background/FormAddFamilyMember";
 import FormAddEmploymentHistory from "./employment-history/FormAddEmploymentHistory";
+import CardList from "../CardList";
 
 interface Props {
     employeeDetails: EmployeeDetails
@@ -74,7 +75,12 @@ export default function EmploymentHistory (props:Props) {
 
             }
             
-            <Table dataSource={data} columns={columns} className="my-4"/>
+            <Table dataSource={data} columns={columns} className="my-4 hidden md:block"/>
+            
+            <div className="md:hidden">
+                <CardList dataList={data} titleKey="position" excludeKeys={["key"]} />
+            </div>
+
             <Button type="primary" htmlType="submit" className='mt-4'>
                 Save
             </Button>

@@ -24,8 +24,6 @@ export default function SideBar() {
     const setShowSideBar = useStore((state: any) => state.setShowSideBar)
     const showSideBar = useStore((state: any) => state.showSideBar)
 
-    const navRoute = useStore((state: any) => state.navRoute)
-
     const currentRoute = useStore((state: any) => state.setCurrent)
 
     const screenSize = useStore((state: any) => state.screenSize)
@@ -45,7 +43,7 @@ export default function SideBar() {
         {
             name: "Admin Portal",
             icon: <GrUserAdmin className='text-2xl' />,
-            link: "/admin",
+            link: "",
             sub: [
                 {
                     name: "Categories",
@@ -63,45 +61,10 @@ export default function SideBar() {
             name: "Employees",
             icon: <BiGroup className='text-2xl' />,
             link: "/employees",
-            sub: [
-                {
-                    name: "Categories",
-                    icon: <BiCategory className='text-2xl'/>,
-                    link: "/employees/categories"
-                },
-                {
-                    name: "Payroll",
-                    icon: <FaCcPaypal className='text-2xl'/>,
-                    link: "/employees/payroll"
-                }
-            ]
+            sub: []
         }
     ];
 
-    // const items: MenuItem[] = [
-    //     {
-    //         key: 'dashboard',
-    //         icon: <BiSolidDashboard className='text-2xl' />,
-    //         label: 'Dashboard',
-    //     },
-    //     {
-    //         key: "admin",
-    //         icon: <BiGroup className='text-2xl' />,
-    //         label: "/admin"
-    //     },
-    //     {
-    //         key: 'employees',
-    //         icon: <BiGroup className='text-2xl' />,
-    //         label: 'Employees',
-    //     },
-    // ];
-
-    // const handleResize = () => {
-    //     setScreenSize({
-    //         width: window.innerWidth,
-    //         height: window.innerHeight,
-    //     });
-    // }
     const handleResize = useCallback(() => {
         setScreenSize({
             width: window.innerWidth,
@@ -125,38 +88,15 @@ export default function SideBar() {
         };
     }, [handleResize, setScreenSize]);
 
-
-    const handleDropdownSub = (navLink:string) => {
-
-        console.log(navLink)
-        switch (navLink) {
-
-            case navRoute.current:
-                navRoute.setCurrent(null)
-                break;
-
-            default:
-                navRoute.setCurrent(navLink)
-                break
-        }
-
-    }
-
-    useEffect(() => {
-        console.log(navRoute.current)
-    },[navRoute.current])
-
     return (
         <div className=''>
-            {screenSize.width > 640 ? (
+            {screenSize.width > 768 ? (
                 <SidebarDesktop 
                     routes={routes}
-                    handleDropdownSub={handleDropdownSub}
                 />
             ) : (
                 <SidebarMobile 
                     routes={routes}
-                    handleDropdownSub={handleDropdownSub}
                 />
             )}
         </div>

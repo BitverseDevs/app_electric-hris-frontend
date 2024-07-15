@@ -9,7 +9,7 @@ export default function Employees() {
 
     return (
         <div>
-            <div className="w-[500px] mt-8 m-auto bg-white p-4 rounded-md shadow-xl">
+            <div className="max-w-[500px] mt-8 m-auto bg-white p-4 rounded-md shadow-xl">
                 <Button type="primary" onClick={() => router.push('/employees/add-employee')}>Add New Employee</Button>
                 <TableEmployees />
             </div>

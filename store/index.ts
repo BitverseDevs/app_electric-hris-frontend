@@ -8,19 +8,6 @@ export const useStore = create((set) => ({
 
     // STATE
     showSideBar: false,
-    navRoute: {
-        current: null,
-        setCurrent: (link: string) => set((state:any) => 
-            (
-                {
-                    ...state, 
-                    naveRoute: {
-                        ...state.navRoute,
-                        current:link
-                    }
-                }
-        ))
-    },
     screenSize: {
         width: 0,
         height: 0
