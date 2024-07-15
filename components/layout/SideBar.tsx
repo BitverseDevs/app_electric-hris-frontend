@@ -53,7 +53,7 @@ export default function SideBar() {
                 {
                     name: "Payroll",
                     icon: <FaCcPaypal className='text-2xl'/>,
-                    link: "/admin/payroll"
+                    link: "/admin/payrolls"
                 }
             ]
         },

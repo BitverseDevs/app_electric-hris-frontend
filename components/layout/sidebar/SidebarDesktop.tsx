@@ -6,7 +6,7 @@ import { IoClose } from "react-icons/io5";
 import { usePathname, useRouter } from "next/navigation";
 import { Fragment, ReactElement, useState } from "react";
 import { RoutesTypes, SubRoutesTypes } from "@/types";
-import {BiChevronDown} from "react-icons/bi";
+import {BiChevronDown, BiChevronUp} from "react-icons/bi";
 import SubMenu from "./SubMenu";
 
 interface Props {
@@ -25,8 +25,10 @@ export default function SidebarDesktop(props:Props) {
     };
 
     const handleMenuIndex = (index:number | null) => {
-        if (currentMenuIndex == index) setCurrentMenuIndex(currIndex => null)
-        else setCurrentMenuIndex((currIndex) => index)
+        if (currentMenuIndex == index) 
+            setCurrentMenuIndex(currIndex => null)
+        else 
+            setCurrentMenuIndex((currIndex) => index)
     }
 
     return (
@@ -65,7 +67,12 @@ export default function SidebarDesktop(props:Props) {
                                         </div>
                                     </Link>
                                     
-                                    {route.sub && route.sub.length > 0 && <BiChevronDown className="text-2xl"/>}
+                                    {
+                                        route.sub && route.sub.length > 0 
+                                        && (currentMenuIndex == index 
+                                        ? <BiChevronUp className={`transition-all text-2xl`}/>
+                                        : <BiChevronDown  className={`transition-all text-2xl`}/>)
+                                    }
                                 </li>
                                 <SubMenu 
                                     subRoutes={route.sub} 

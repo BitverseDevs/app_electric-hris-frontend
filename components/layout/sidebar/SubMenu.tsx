@@ -20,7 +20,7 @@ export default function SubRMenu(props:Props){
     };
 
     return (
-        <div className={`transition-all duration-500 ${menuIndex == currentMenuIndex? 'max-h-96': 'max-h-0'} overflow-hidden`}>
+        <div className={`transition-all duration-300 ${menuIndex == currentMenuIndex? 'max-h-96': 'max-h-0'} overflow-hidden`}>
             <ul>
                 {
                     Array.isArray(subRoutes) 
