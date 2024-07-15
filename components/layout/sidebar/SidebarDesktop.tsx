@@ -70,8 +70,13 @@ export default function SidebarDesktop(props:Props) {
                                     {
                                         route.sub && route.sub.length > 0 
                                         && (currentMenuIndex == index 
-                                        ? <BiChevronUp className={`transition-all text-2xl`}/>
-                                        : <BiChevronDown  className={`transition-all text-2xl`}/>)
+                                        ?   <div className="px-4">
+                                                <BiChevronUp className={`transition-all text-2xl`}/>
+                                            </div>
+                                        :   <div className="px-4">
+                                                <BiChevronDown  className={`transition-all text-2xl`}/>
+                                            </div>
+                                        )
                                     }
                                 </li>
                                 <SubMenu 

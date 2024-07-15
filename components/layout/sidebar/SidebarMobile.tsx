@@ -7,7 +7,7 @@ import BitverseLogo from '@/assets/bitverse-logo.png';
 import { IoClose } from "react-icons/io5";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "antd";
-import { BiChevronDown, BiChevronLeft } from "react-icons/bi";
+import { BiChevronDown, BiChevronLeft, BiChevronUp } from "react-icons/bi";
 import { createPortal } from "react-dom";
 import { Fragment, useEffect, useRef, useState } from "react";
 import SubMenu from "./SubMenu";
@@ -89,7 +89,17 @@ export default function SidebarMobile (props:any) {
                                                         {route.name}
                                                     </div>
                                                 </Link>
-                                                {route.sub && route.sub.length > 0 && <BiChevronDown className="text-2xl"/>}
+                                                {
+                                                    route.sub && route.sub.length > 0 
+                                                    && (currentMenuIndex == index 
+                                                    ?   <div className="px-4">
+                                                            <BiChevronUp className={`transition-all text-2xl`}/>
+                                                        </div>
+                                                    :   <div className="px-4">
+                                                            <BiChevronDown  className={`transition-all text-2xl`}/>
+                                                        </div>
+                                                    )
+                                                }
                                             </li>
                                             <SubMenu 
                                                 subRoutes={route.sub} 
