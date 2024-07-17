@@ -1,4 +1,4 @@
-import { useStore } from "@/store";
+import { useModalStore } from "@/store/modalStore";
 import { FamilyMembers, PreviousEmployer } from "@/types";
 import { formatTextToNumber } from "@/utils/format-text";
 import { Button, DatePicker, Form, Input } from "antd";
@@ -13,7 +13,7 @@ export default function FormAddEmploymentHistory(props: Props) {
     const { handleFormChange } = props
 
     // STATES
-    const { setModal } = useStore((state: any) => state.modal) 
+    const { setModal } = useModalStore((state: any) => state) 
     const [form] = useForm()
 
     const onFinish: FormProps['onFinish'] = (values) => {

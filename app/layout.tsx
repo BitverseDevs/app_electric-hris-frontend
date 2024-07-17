@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import SideBar from "@/components/layout/SideBar";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { CookiesProvider } from "next-client-cookies/server";
 import { ConfigProvider, Typography } from "antd";

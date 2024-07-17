@@ -5,16 +5,18 @@ import { UserOutlined } from '@ant-design/icons';
 import { useRef, useState } from "react";
 import { BiFace } from "react-icons/bi";
 import useAuth from "@/hooks/use-auth";
-import { useStore } from "@/store";
+
 import { GiHamburgerMenu } from "react-icons/gi";
+import { useMenuStore } from "@/store/menuStore";
+import { useScreenStore } from "@/store/screenStore";
 
 export default function Header() {
 
     const { logout } = useAuth()
-    const setShowSideBar = useStore((state:any) => state.setShowSideBar)
-    const showSideBar = useStore((state:any) => state.showSideBar)
+    
+    const {isShow, setIsShow} = useMenuStore((state) => state.sidebar)
 
-    const screenSize = useStore((state:any) => state.screenSize)
+    const {width: screenWidth, height: screenHeight, setScreenSize} = useScreenStore((state:any) => state.screen)
     
     const items: MenuProps['items'] = [
         {
@@ -45,8 +47,8 @@ export default function Header() {
     return (
         <div className="bg-slate-100 h-16 w-full sticky z-10 top-0 flex items-center justify-between md:justify-end px-4">
             {
-              screenSize.width <= 640 &&
-              <GiHamburgerMenu onClick={() => setShowSideBar(true)}/>
+              screenWidth <= 768 &&
+              <GiHamburgerMenu onClick={() => setIsShow(true)}/>
             }
             <div>
                 <Dropdown className="cursor-pointer" menu={{ items }}  trigger={['click']}>

@@ -9,27 +9,19 @@ import { IoClose } from 'react-icons/io5';
 import { BiCategory, BiChevronLeft, BiChevronRight, BiGroup, BiSolidDashboard } from "react-icons/bi";
 import BitverseLogo from '@/assets/bitverse-logo.png';
 import { MenuProps } from 'antd/lib/menu';
-import { useStore } from '@/store';
 import { usePathname, useRouter } from 'next/navigation';
 import SidebarMobile from './sidebar/SidebarMobile';
 import SidebarDesktop from './sidebar/SidebarDesktop';
 import { GrUserAdmin } from 'react-icons/gr';
 import { FaCcPaypal } from 'react-icons/fa';
 import { RoutesTypes } from '@/types';
+import { useScreenStore } from '@/store/screenStore';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
 export default function SideBar() {
-    // const [isShow, setIsShow] = useState<boolean>(false);
-    const setShowSideBar = useStore((state: any) => state.setShowSideBar)
-    const showSideBar = useStore((state: any) => state.showSideBar)
 
-    const currentRoute = useStore((state: any) => state.setCurrent)
-
-    const screenSize = useStore((state: any) => state.screenSize)
-    const setScreenSize = useStore((state: any) => state.setScreenSize)
-
-    const sideBarRef = useRef(null)
+    const {width:screenWidth, height:screenHeight, setScreenSize} = useScreenStore((state: any) => state.screen)
 
 
     // Routes and menu items
@@ -90,7 +82,7 @@ export default function SideBar() {
 
     return (
         <div className=''>
-            {screenSize.width > 768 ? (
+            {screenWidth > 768 ? (
                 <SidebarDesktop 
                     routes={routes}
                 />

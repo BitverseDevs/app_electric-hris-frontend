@@ -2,9 +2,10 @@ import { EmployeeDetails, PreviousEmployer } from "@/types"
 import { Button, Form, Input, Modal, Table } from "antd";
 import { useForm } from "antd/es/form/Form";
 import FormAddPreviousEmployer from "./BIR/FormAddPreviousEmployer";
-import { useStore } from "@/store";
 import { useState } from "react";
 import CardList from "../CardList";
+import { useModalStore } from "@/store/modalStore";
+import { useScreenStore } from "@/store/screenStore";
 
 interface Props {
     employeeDetails: EmployeeDetails
@@ -17,8 +18,8 @@ export default function BIR(props:Props) {
     const [form] = useForm()
     
     // STATE
-    const {formAddPrevEmp, setModal} = useStore((state: any) => state.modal)
-    const screenSize = useStore((state: any) => state.screenSize)
+    const {formAddPrevEmp, setModal} = useModalStore((state: any) => state)
+    const {width:screenWidth} = useScreenStore((state: any) => state.screen)
     const [data, setData] = useState<PreviousEmployer []>([
         {
             key: 1,
@@ -73,7 +74,7 @@ export default function BIR(props:Props) {
     return (
         <div >
             {
-                screenSize.width < 768 ?
+                screenWidth < 768 ?
                     <div>
                         <Button type="primary" onClick={() => setModal("formAddPrevEmp", true)}>Add Previous Employer</Button>
                         <Modal 

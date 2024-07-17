@@ -1,9 +1,10 @@
-import { useStore } from "@/store";
 import { EmployeeDetails, FamilyMembers } from "@/types";
 import { Button, Form, Modal, Table, Tabs, TabsProps, Typography } from "antd";
 import { useState } from "react";
 import FormAddFamilyMember from "./family-background/FormAddFamilyMember";
 import CardList from "../CardList";
+import { useScreenStore } from "@/store/screenStore";
+import { useModalStore } from "@/store/modalStore";
 
 interface Props {
     employeeDetails: EmployeeDetails
@@ -13,8 +14,8 @@ interface Props {
 export default function FamilyBackground (props:Props) {
 
     const {employeeDetails, setEmployeeDetails} = props
-    const {formAddFamilyMember, setModal} = useStore((state: any) => state.modal)
-    const screenSize = useStore((state: any) => state.screenSize)
+    const {formAddFamilyMember, setModal} = useModalStore((state: any) => state)
+    const {width: screenWidth} = useScreenStore((state: any) => state.screen)
     
     const { Text, Link, Title} = Typography;
     const [data, setData] = useState<FamilyMembers []>([])
@@ -70,7 +71,7 @@ export default function FamilyBackground (props:Props) {
 
         <div >
             {
-                screenSize.width < 640 ?
+                screenWidth < 768 ?
                     <div>
                         <Button type="primary" onClick={() => setModal("formAddFamilyMember", true)}>Add Family Member</Button>
                         <Modal 

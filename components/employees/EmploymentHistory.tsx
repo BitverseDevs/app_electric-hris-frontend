@@ -1,10 +1,11 @@
-import { useStore } from "@/store";
 import { EmployeeDetails, FamilyMembers } from "@/types";
 import { Button, Form, Modal, Table, Tabs, TabsProps, Typography } from "antd";
 import { useState } from "react";
 import FormAddFamilyMember from "./family-background/FormAddFamilyMember";
 import FormAddEmploymentHistory from "./employment-history/FormAddEmploymentHistory";
 import CardList from "../CardList";
+import { useModalStore } from "@/store/modalStore";
+import { useScreenStore } from "@/store/screenStore";
 
 interface Props {
     employeeDetails: EmployeeDetails
@@ -14,9 +15,9 @@ interface Props {
 export default function EmploymentHistory (props:Props) {
 
     const {employeeDetails, setEmployeeDetails} = props
-    const {formAddEmploymentHistory, setModal} = useStore((state: any) => state.modal)
-    const screenSize = useStore((state: any) => state.screenSize)
-    
+    const {formAddEmploymentHistory, setModal} = useModalStore((state: any) => state.modal)
+    const {width:screenWidth} = useScreenStore((state: any) => state.screen)
+
     const { Text, Link, Title} = Typography;
     const [data, setData] = useState<FamilyMembers []>([])
 
@@ -56,7 +57,7 @@ export default function EmploymentHistory (props:Props) {
 
         <div >
             {
-                screenSize.width < 640 ?
+                screenWidth < 768 ?
                     <div>
                         <Button type="primary" onClick={() => setModal("formAddEmploymentHistory", true)}>Add Employment History</Button>
                         <Modal 

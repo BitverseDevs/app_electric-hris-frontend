@@ -1,6 +1,5 @@
 "use client"
 
-import { useStore } from "@/store"
 import Link from "next/link"
 import Image from 'next/image';
 import BitverseLogo from '@/assets/bitverse-logo.png';
@@ -11,11 +10,13 @@ import { BiChevronDown, BiChevronLeft, BiChevronUp } from "react-icons/bi";
 import { createPortal } from "react-dom";
 import { Fragment, useEffect, useRef, useState } from "react";
 import SubMenu from "./SubMenu";
+import { useMenuStore } from "@/store/menuStore";
 
 export default function SidebarMobile (props:any) {
     const {routes} = props
-    const setShowSideBar = useStore((state: any) => state.setShowSideBar)
-    const showSideBar = useStore((state: any) => state.showSideBar)
+
+    const {isShow, setIsShow} = useMenuStore((state) => state.sidebar)
+
     const [isClient, setIsClient] = useState(false);
     const [currentMenuIndex, setCurrentMenuIndex] = useState<number | null>(null);
     
@@ -30,15 +31,17 @@ export default function SidebarMobile (props:any) {
     const handleSideBar = (event:any) => {
         if (sideBarRef.current == event.target) {
             // Clicked outside sidebar, close sidebar
-            setShowSideBar(false);
+            setIsShow(false);
         }
     };
 
+    // WATCH IF COMPONENT IS RENDERED
     useEffect(() => {
         if (typeof document !== "undefined") {
             setIsClient(true);
         }
     }, []);
+
 
     const handleMenuIndex = (index:number | null) => {
         if (currentMenuIndex == index) setCurrentMenuIndex(currIndex => null)
@@ -52,7 +55,7 @@ export default function SidebarMobile (props:any) {
                     <div 
                         ref={sideBarRef} 
                         onClick={handleSideBar}
-                        className={`h-screen top-0 fixed z-20 shadow-2xl transition-all ${showSideBar ? 'w-full' : 'w-0' } bg-slate-400 bg-opacity-30 overflow-hidden`}>
+                        className={`h-screen top-0 fixed z-20 shadow-2xl transition-all ${isShow ? 'w-full' : 'w-0' } bg-slate-400 bg-opacity-30 overflow-hidden`}>
                     {/* Sidebar content for larger screens */}
                         <aside className={`h-full w-[280px] bg-white`}>
                             <nav>
@@ -65,7 +68,7 @@ export default function SidebarMobile (props:any) {
                                         />
                                     </Link>
 
-                                    <Button type="link" onClick={() => setShowSideBar(!showSideBar)}>
+                                    <Button type="link" onClick={() => setIsShow(!isShow)}>
                                         <BiChevronLeft
                                             className='text-3xl text-slate-500 hover:text-blue-600'
                                         />
@@ -83,7 +86,7 @@ export default function SidebarMobile (props:any) {
                                                 <Link 
                                                     className="flex gap-4 px-8 py-4 w-full" 
                                                     href={route.link} 
-                                                    onClick={() => (!route.sub || route.sub.length == 0) && setShowSideBar(false)}>
+                                                    onClick={() => (!route.sub || route.sub.length == 0) && setIsShow(false)}>
                                                     <span>{route.icon}</span>
                                                     <div className={`transition-all overflow-hidden`}>
                                                         {route.name}
@@ -93,10 +96,10 @@ export default function SidebarMobile (props:any) {
                                                     route.sub && route.sub.length > 0 
                                                     && (currentMenuIndex == index 
                                                     ?   <div className="px-4">
-                                                            <BiChevronUp className={`transition-all text-2xl`}/>
+                                                            <BiChevronDown className={`transition-all text-2xl`}/>
                                                         </div>
                                                     :   <div className="px-4">
-                                                            <BiChevronDown  className={`transition-all text-2xl`}/>
+                                                            <BiChevronLeft  className={`transition-all text-2xl`}/>
                                                         </div>
                                                     )
                                                 }

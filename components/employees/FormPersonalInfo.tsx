@@ -4,86 +4,63 @@ import { Button, Form, Input, Select, Space, DatePicker } from 'antd';
 import { EmployeeDetails } from '@/types';
 import type { DatePickerProps, GetProp, UploadFile, UploadProps } from 'antd';
 import ProfilePicture from './personal-information/ProfilePicture';
+import dayjs from 'dayjs';
+import SubmitButton from '../forms/SubmitButton';
+import api from '@/utils/axios-config';
 
 interface Props {
-    employeeDetails: EmployeeDetails
-    setEmployeeDetails: any
+    initialValues: EmployeeDetails | null
 }
 
-export default function Personal(props: Props) {
+const submitInfo = async (payload:any) => {
 
-    const { Text, Link, Title} = Typography;
+    const res = await api.post('/')
+    return await res
+}
 
-    const {employeeDetails, setEmployeeDetails} = props
+export default function FormPersonalInfo(props: Props) {
 
+    const { Text, Link, Title} = Typography;    
+
+    const { initialValues } = props
+
+
+    
     //STATES
-    const [personalData, setPersonalData] = useState<EmployeeDetails>(
-        {
-            first_name: '',
-            middle_name: '',
-            last_name: '',
-            suffix: '',
-            birth_date: null,
-            sex: '',
-            civil_status: '',
-            spouse_first_name: '',
-            spouse_middle_name: '',
-            spouse_last_name: '',
-            spouse_suffix: '',
-        }
-    );
+    const [employeeInfo, setEmployeeInfo] = useState<EmployeeDetails| null>(null)
+
 
     const [form] = Form.useForm();
 
-    //FUNCTIONS
-    const handleChangePersonalData = (e:any) => {
-
-        setPersonalData((curr:EmployeeDetails) => (
-            {
-                ...curr,
-                [e.target.name]: e.target.value
-            }
-        ))
-    }
-
-    const handleSelectChange = (name:string, value:string | number | null) => {
-        if(value) {
-            setPersonalData((curr:EmployeeDetails) => (
-                {
-                    ...curr,
-                    [name]: value
-                }
-            ))
-        }
-    }
-
-    const handleDateChange = (name:string, date: Date, dateString:string | string[] | null) => {
-        setPersonalData((curr:EmployeeDetails) => (
-            {
-                ...curr,
-                [name]: dateString
-            }
-        ))
-    }
-
     const onFinish: FormProps['onFinish'] = (values) => {
-        console.table(values);
-        setEmployeeDetails((curr:any) => ({
-            ...curr,
+        console.log(values)
+
+        const payload = {
             first_name: values.first_name,
             middle_name: values.middle_name,
             last_name: values.last_name,
             suffix: values.suffix,
-            birth_date: values.birth_date,
+            birth_date: dayjs(values.birth_date).format("YYYY-MM-DD"),
             sex: values.sex,
             civil_status: values.civil_status,
             spouse_first_name: values.spouse_first_name,
             spouse_middle_name: values.spouse_middle_name,
             spouse_last_name: values.spouse_last_name,
             spouse_suffix: values.spouse_suffix,
-        }))
+        }
+
+        // UPDATE OR INSERT NEW DATA
     };
     
+    const handleValuesChange = (changedValues:any, allValues:any) => {
+
+        setEmployeeInfo((curr:EmployeeDetails | null) => (
+            {
+                ...allValues
+            }
+        ))
+    }
+
     return (
         <div>
             <Title level={3}>Personal Information</Title>
@@ -93,6 +70,7 @@ export default function Personal(props: Props) {
                     layout="vertical"
                     initialValues={{ remember: true }}
                     onFinish={onFinish}
+                    onValuesChange={handleValuesChange}
                 >
                     <Row gutter={[16,16]}>
                         <Col span={24}>
@@ -110,8 +88,7 @@ export default function Personal(props: Props) {
                                 ]}
                             >
                                 <Input 
-                                    name="first_name"
-                                    onChange={handleChangePersonalData}
+                                    name="first_name"                                
                                 />
                             </Form.Item>
                         </Col>
@@ -129,7 +106,6 @@ export default function Personal(props: Props) {
                             >
                                 <Input
                                     name="middle_name" 
-                                    onChange={handleChangePersonalData}
                                 />
                             </Form.Item>
                         </Col>
@@ -147,7 +123,6 @@ export default function Personal(props: Props) {
                             >
                                 <Input 
                                     name="last_name" 
-                                    onChange={handleChangePersonalData}
                                 />
                             </Form.Item>
                         </Col>
@@ -159,7 +134,7 @@ export default function Personal(props: Props) {
                             >
                                 <Input 
                                     name="suffix" 
-                                    onChange={handleChangePersonalData}
+                                    
                                 />
                             </Form.Item>
                         </Col>
@@ -178,7 +153,7 @@ export default function Personal(props: Props) {
                                 <DatePicker 
                                     className='w-full'
                                     name="birth_date" 
-                                    onChange={(date:Date, dateString:string | string []) => handleDateChange('birth_date', date, dateString)}
+                                    // onChange={(date:Date, dateString:string | string []) => handleDateChange('birth_date', date, dateString)}
                                 />
                             </Form.Item>
                         </Col>
@@ -195,7 +170,6 @@ export default function Personal(props: Props) {
                                 ]}
                             >
                                 <Select 
-                                    onChange={(value:string) => handleSelectChange("sex",value)}
                                     options={[
                                         { value: 'male', label: 'Male' },
                                         { value: 'female', label: 'Female' },
@@ -219,7 +193,6 @@ export default function Personal(props: Props) {
                                         ]}
                                     >
                                         <Select
-                                            onChange={(value:string) => handleSelectChange("civil_status",value)}
                                             options={[
                                                 { value: 'S', label: 'Single' },
                                                 { value: 'M', label: 'Married' },
@@ -236,7 +209,7 @@ export default function Personal(props: Props) {
                                         label="Spouse First Name:"
                                         className='w-full'
                                         rules={
-                                            personalData.civil_status == "M" ? [
+                                            employeeInfo?.civil_status == "M" ? [
                                                 { 
                                                     required: true,
                                                     message: 'Please input Spouse First Name' 
@@ -246,19 +219,19 @@ export default function Personal(props: Props) {
                                     >
                                         <Input 
                                             name="spouse_first_name" 
-                                            disabled={personalData.civil_status != "M"}
-                                            onChange={handleChangePersonalData}
+                                            disabled={employeeInfo?.civil_status != "M"}
+                                            
                                         />
                                     </Form.Item>
                                 </Col>
-                                
+
                                 <Col flex="auto">
                                     <Form.Item 
                                         name="spouse_middle_name" 
                                         label="Spouse Middle Name:"
                                         className='w-full'
                                         rules={
-                                            personalData.civil_status == "M" ? [
+                                            employeeInfo?.civil_status == "M" ? [
                                                 { 
                                                     required: true,
                                                     message: 'Please input Spouse Middle Name' 
@@ -268,8 +241,8 @@ export default function Personal(props: Props) {
                                     >
                                         <Input 
                                             name="spouse_middle_name" 
-                                            disabled={personalData.civil_status != "M"}
-                                            onChange={handleChangePersonalData}
+                                            disabled={employeeInfo?.civil_status != "M"}
+                                            
                                         />
                                     </Form.Item>
                                 </Col>
@@ -280,7 +253,7 @@ export default function Personal(props: Props) {
                                         label="Spouse Last Name:"
                                         className='w-full'
                                         rules={
-                                            personalData.civil_status == "M" ? [
+                                            employeeInfo?.civil_status == "M" ? [
                                                 { 
                                                     required: true,
                                                     message: 'Please input Spouse Last Name' 
@@ -290,12 +263,11 @@ export default function Personal(props: Props) {
                                     >
                                         <Input 
                                             name="spouse_last_name" 
-                                            disabled={personalData.civil_status != "M"}
-                                            onChange={handleChangePersonalData}
+                                            disabled={employeeInfo?.civil_status != "M"}
+                                            
                                         />
                                     </Form.Item>
                                 </Col>
-    
                                 <Col flex="auto">
                                     <Form.Item 
                                         name="spouse_suffix" 
@@ -304,8 +276,8 @@ export default function Personal(props: Props) {
                                     >
                                         <Input 
                                             name="spouse_suffix" 
-                                            disabled={personalData.civil_status != "M"}
-                                            onChange={handleChangePersonalData}
+                                            disabled={employeeInfo?.civil_status != "M"}
+                                            
                                         />
                                     </Form.Item>
                                 </Col>
@@ -331,7 +303,7 @@ export default function Personal(props: Props) {
                                     name="mobile_number"
                                     placeholder='9123456789'
                                     maxLength={10}
-                                    onChange={handleChangePersonalData}
+                                    
                                 />
                             </Form.Item>
                         </Col>
@@ -353,7 +325,7 @@ export default function Personal(props: Props) {
                                 <Input
                                     name="email_address" 
                                     placeholder='boyax@gmail.com'
-                                    onChange={handleChangePersonalData}
+                                    
                                 />
                             </Form.Item>
                         </Col>
@@ -374,7 +346,7 @@ export default function Personal(props: Props) {
                                     >
                                         <Input
                                             name="emerg_contact_person" 
-                                            onChange={handleChangePersonalData}
+                                            
                                         />
                                     </Form.Item>
                                 </Col>
@@ -398,7 +370,7 @@ export default function Personal(props: Props) {
                                             name="emerg_mobile_number" 
                                             placeholder='9123456789'
                                             maxLength={10}
-                                            onChange={handleChangePersonalData}
+                                            
                                         />
                                     </Form.Item>
                                 </Col>
@@ -432,9 +404,12 @@ export default function Personal(props: Props) {
                     </Row>
 
                     <Form.Item>
-                        <Button type="primary" htmlType="submit" className='mt-4'>
-                            Save
-                        </Button>
+                        <SubmitButton 
+                            form={form}
+                            isLoading={false}
+                        >
+                            Submit
+                        </SubmitButton>
                     </Form.Item>
                 </Form>
             </div>

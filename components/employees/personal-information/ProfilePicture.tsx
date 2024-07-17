@@ -39,28 +39,11 @@ export default function ProfilePicture() {
 
     const handleChange: UploadProps['onChange'] = (info) => {
 
+        getBase64(info.file.originFileObj as FileType, (url) => {
+            setLoading(false);
+            setImageUrl(url);
+        });
 
-        console.log(info.file)
-        if (info.file.status === 'uploading') {
-            setLoading(true);
-            return;
-        }
-        if (info.file.status === 'done') {
-            // Get this url from response in real world.
-            getBase64(info.file.originFileObj as FileType, (url) => {
-                setLoading(false);
-                setImageUrl(url);
-            });
-        }
-
-        if (info.file.status === 'error') {
-            // Get this url from response in real world.
-            getBase64(info.file.originFileObj as FileType, (url) => {
-                setLoading(false);
-                setImageUrl(url);
-            });
-            message.error('Something went wrong');
-        }
     };
 
     const uploadButton = (
@@ -71,9 +54,7 @@ export default function ProfilePicture() {
     );
 
     const customRequest = ({ file, onSuccess, onError }: any) => {
-        // Prevent the default upload behavior
-        console.log('Custom request:', file);
-        onSuccess(null, file); // Simulate successful upload
+        onSuccess("ok"); 
     };
 
 

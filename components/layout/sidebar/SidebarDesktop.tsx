@@ -1,4 +1,3 @@
-import { useStore } from "@/store"
 import Link from "next/link"
 import Image from 'next/image';
 import BitverseLogo from '@/assets/bitverse-logo.png';
@@ -6,7 +5,7 @@ import { IoClose } from "react-icons/io5";
 import { usePathname, useRouter } from "next/navigation";
 import { Fragment, ReactElement, useState } from "react";
 import { RoutesTypes, SubRoutesTypes } from "@/types";
-import {BiChevronDown, BiChevronUp} from "react-icons/bi";
+import {BiChevronDown, BiChevronLeft, BiChevronUp} from "react-icons/bi";
 import SubMenu from "./SubMenu";
 
 interface Props {
@@ -71,10 +70,10 @@ export default function SidebarDesktop(props:Props) {
                                         route.sub && route.sub.length > 0 
                                         && (currentMenuIndex == index 
                                         ?   <div className="px-4">
-                                                <BiChevronUp className={`transition-all text-2xl`}/>
+                                                <BiChevronDown className={`transition-all text-2xl`}/> 
                                             </div>
                                         :   <div className="px-4">
-                                                <BiChevronDown  className={`transition-all text-2xl`}/>
+                                                <BiChevronLeft  className={`transition-all text-2xl`}/>
                                             </div>
                                         )
                                     }
