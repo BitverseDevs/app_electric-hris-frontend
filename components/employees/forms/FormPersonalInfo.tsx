@@ -3,13 +3,15 @@ import { Card, Col, FormProps, message, Row, Typography, Upload } from 'antd';
 import { Button, Form, Input, Select, Space, DatePicker } from 'antd';
 import { EmployeeDetails } from '@/types';
 import type { DatePickerProps, GetProp, UploadFile, UploadProps } from 'antd';
-import ProfilePicture from './personal-information/ProfilePicture';
+import ProfilePicture from '../personal-information/ProfilePicture';
 import dayjs from 'dayjs';
-import SubmitButton from '../forms/SubmitButton';
+import SubmitButton from '../../forms/SubmitButton';
 import api from '@/utils/axios-config';
 
 interface Props {
     initialValues: EmployeeDetails | null
+    children?: React.ReactNode;
+    onSubmit: () => void | null
 }
 
 const submitInfo = async (payload:any) => {
@@ -21,11 +23,7 @@ const submitInfo = async (payload:any) => {
 export default function FormPersonalInfo(props: Props) {
 
     const { Text, Link, Title} = Typography;    
-
-    const { initialValues } = props
-
-
-    
+    const { initialValues, onSubmit, children} = props
     //STATES
     const [employeeInfo, setEmployeeInfo] = useState<EmployeeDetails| null>(null)
 
@@ -50,6 +48,7 @@ export default function FormPersonalInfo(props: Props) {
         }
 
         // UPDATE OR INSERT NEW DATA
+        if(onSubmit) onSubmit()
     };
     
     const handleValuesChange = (changedValues:any, allValues:any) => {
@@ -402,14 +401,13 @@ export default function FormPersonalInfo(props: Props) {
                         </Col> */}
                         
                     </Row>
+                    
 
+                    {/* {children} */}
                     <Form.Item>
-                        <SubmitButton 
-                            form={form}
-                            isLoading={false}
-                        >
-                            Submit
-                        </SubmitButton>
+                        <div className='py-4'>
+                            {children}
+                        </div>
                     </Form.Item>
                 </Form>
             </div>

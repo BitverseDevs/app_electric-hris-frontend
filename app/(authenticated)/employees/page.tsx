@@ -1,6 +1,6 @@
 "use client";
 
-import CreatePersonalInfo from "@/components/employees/add-employees/CreatePersonalInfo";
+import AddEmployeeInfo from "@/components/employees/add-employees/AddEmployeeInfo";
 import TableEmployees from "@/components/employees/TableEmployees"
 import { useModalStore } from "@/store/modalStore";
 import { Button } from "antd";
@@ -14,7 +14,7 @@ export default function Employees() {
         <div>
             <div className="max-w-[500px] mt-8 m-auto bg-white p-4 rounded-md shadow-xl">
                 <Button type="primary" onClick={() => setModal("showAddEmployeeModal", true)}>Add New Employee</Button>
-                <CreatePersonalInfo />
+                <AddEmployeeInfo />
                 <TableEmployees />
             </div>
         </div>
