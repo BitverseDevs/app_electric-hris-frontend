@@ -1,6 +1,6 @@
 "use client";
 
-import useAuth from "@/hooks/use-auth";
+import useAuth from "@/hooks/useAuth";
 import { Button, Card, Col, Form, FormProps, Input, Row, Typography, message } from "antd";
 import { useRouter } from "next/navigation";
 

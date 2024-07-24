@@ -1,10 +1,10 @@
-import { EmployeeDetails } from "@/types";
+import { EmployeeDataType, EmploymentInfoType } from "@/types/employee-type";
 import { Col, DatePicker, Form, FormProps, Row, Select, Typography } from "antd";
 
 interface Props {
-    initialValues: EmployeeDetails | null
+    initialValues: EmployeeDataType | null
     children?: React.ReactNode;
-    onSubmit: () => void | null
+    onSubmit: (values:EmploymentInfoType) => void | null
 }
 
 export default function FormEmploymentInfo(props:Props) {
@@ -16,23 +16,23 @@ export default function FormEmploymentInfo(props:Props) {
 
     const onFinish: FormProps['onFinish'] = (values) => {
 
-        if(onSubmit) onSubmit()
+        onSubmit(values)
     };
 
     const companyOptions = [
-        { value: '1', label: 'Jack' },
-        { value: '2', label: 'Lucy' },
-        { value: '3', label: 'Tom' },
+        { value: 1, label: 'Jack' },
+        { value: 2, label: 'Lucy' },
+        { value: 3, label: 'Tom' },
     ]
 
     const positionOptions = [
-        { value: '1', label: 'Developer' },
-        { value: '2', label: 'Project Manager' },
+        { value: 1, label: 'Developer' },
+        { value: 2, label: 'Project Manager' },
     ]
 
     const roleOptions = [
-        { value: '1', label: 'Super Admin' },
-        { value: '2', label: 'Admin Lang' },
+        { value: 1, label: 'Super Admin' },
+        { value: 2, label: 'Admin Lang' },
     ]
     
 
@@ -60,10 +60,25 @@ export default function FormEmploymentInfo(props:Props) {
                                 <DatePicker />
                             </Form.Item>
                     </Col>
+
                     <Col xs={24} sm={12} md={8} lg={4}>
 
                         <Form.Item 
-                            name="company" 
+                            name="employee_number" 
+                            label="Employee Number" 
+                            rules={[
+                                { 
+                                    required: true,
+                                },
+                            ]}
+                        >
+                            <DatePicker />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={12} md={8} lg={4}>
+
+                        <Form.Item 
+                            name="company_id" 
                             label="Company" 
                             rules={[
                                 { 
@@ -86,7 +101,7 @@ export default function FormEmploymentInfo(props:Props) {
                     <Col xs={24} sm={12} md={8} lg={4}>
 
                         <Form.Item 
-                            name="position" 
+                            name="position_id" 
                             label="Position" 
                             rules={[
                                 { 
@@ -109,7 +124,7 @@ export default function FormEmploymentInfo(props:Props) {
                     <Col xs={24} sm={12} md={8} lg={4}>
 
                         <Form.Item 
-                            name="role" 
+                            name="role_id" 
                             label="Role" 
                             rules={[
                                 { 

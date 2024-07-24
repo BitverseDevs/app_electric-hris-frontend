@@ -4,7 +4,7 @@ import { Avatar, Button, Dropdown, Menu, MenuProps, Space } from "antd";
 import { UserOutlined } from '@ant-design/icons';
 import { useRef, useState } from "react";
 import { BiFace } from "react-icons/bi";
-import useAuth from "@/hooks/use-auth";
+import useAuth from "@/hooks/useAuth";
 
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useMenuStore } from "@/store/menuStore";

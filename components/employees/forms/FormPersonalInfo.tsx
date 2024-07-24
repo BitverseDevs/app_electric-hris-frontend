@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react';
+
+// LIB
 import { Card, Col, FormProps, message, Row, Typography, Upload } from 'antd';
 import { Button, Form, Input, Select, Space, DatePicker } from 'antd';
-import { EmployeeDetails } from '@/types';
 import type { DatePickerProps, GetProp, UploadFile, UploadProps } from 'antd';
-import ProfilePicture from '../personal-information/ProfilePicture';
 import dayjs from 'dayjs';
-import SubmitButton from '../../forms/SubmitButton';
+
+// HELPERS
 import api from '@/utils/axios-config';
 
+// COMPONENTS
+import ProfilePicture from '../personal-information/ProfilePicture';
+
+// TYPES
+import { EmployeeDataType, PersonalInfoType } from '@/types/employee-type';
+
 interface Props {
-    initialValues: EmployeeDetails | null
+    initialValues: EmployeeDataType | null
     children?: React.ReactNode;
-    onSubmit: () => void | null
-}
-
-const submitInfo = async (payload:any) => {
-
-    const res = await api.post('/')
-    return await res
+    onSubmit: (values:PersonalInfoType) => void | null
 }
 
 export default function FormPersonalInfo(props: Props) {
@@ -25,35 +26,39 @@ export default function FormPersonalInfo(props: Props) {
     const { Text, Link, Title} = Typography;    
     const { initialValues, onSubmit, children} = props
     //STATES
-    const [employeeInfo, setEmployeeInfo] = useState<EmployeeDetails| null>(null)
+    const [employeeInfo, setEmployeeInfo] = useState<PersonalInfoType| null>(null)
 
 
     const [form] = Form.useForm();
 
     const onFinish: FormProps['onFinish'] = (values) => {
-        console.log(values)
 
         const payload = {
+            employee_image: values.employee_image,
             first_name: values.first_name,
             middle_name: values.middle_name,
             last_name: values.last_name,
             suffix: values.suffix,
-            birth_date: dayjs(values.birth_date).format("YYYY-MM-DD"),
+            // birth_date: dayjs(values.birth_date).format("YYYY-MM-DD"),
+            birth_date: values.birth_date,
             sex: values.sex,
             civil_status: values.civil_status,
             spouse_first_name: values.spouse_first_name,
             spouse_middle_name: values.spouse_middle_name,
             spouse_last_name: values.spouse_last_name,
             spouse_suffix: values.spouse_suffix,
+            mobile_number: values.mobile_number,
+            email_address: values.email_address,
+            emerg_contact_person: values.emerg_contact_person,
+            emerg_mobile_number: values.emerg_mobile_number
         }
 
-        // UPDATE OR INSERT NEW DATA
-        if(onSubmit) onSubmit()
+        onSubmit(payload)
     };
     
     const handleValuesChange = (changedValues:any, allValues:any) => {
 
-        setEmployeeInfo((curr:EmployeeDetails | null) => (
+        setEmployeeInfo((curr:PersonalInfoType | null) => (
             {
                 ...allValues
             }
@@ -73,12 +78,16 @@ export default function FormPersonalInfo(props: Props) {
                 >
                     <Row gutter={[16,16]}>
                         <Col span={24}>
-                            <ProfilePicture />
+                            <ProfilePicture 
+                                initialFile={initialValues?.employee_image} 
+                                initialURL={null}
+                            />
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={4}>
                             <Form.Item 
                                 name="first_name" 
-                                label="First Name:" 
+                                label="First Name:"
+                                initialValue={initialValues?.first_name}
                                 rules={[
                                     { 
                                         required: true,
@@ -96,6 +105,7 @@ export default function FormPersonalInfo(props: Props) {
                             <Form.Item 
                                 name="middle_name" 
                                 label="Middle Name:" 
+                                initialValue={initialValues?.middle_name}
                                 rules={[
                                     { 
                                         required: true,
@@ -112,7 +122,8 @@ export default function FormPersonalInfo(props: Props) {
                         <Col xs={24} sm={12} md={8} lg={4}>
                             <Form.Item 
                                 name="last_name" 
-                                label="Last Name:" 
+                                label="Last Name:"
+                                initialValue={initialValues?.last_name}
                                 rules={[
                                     { 
                                         required: true,
@@ -129,7 +140,8 @@ export default function FormPersonalInfo(props: Props) {
                         <Col xs={24} sm={12} md={8} lg={4}>
                             <Form.Item 
                                 name="suffix" 
-                                label="Suffix:" 
+                                label="Suffix:"
+                                initialValue={initialValues?.suffix}
                             >
                                 <Input 
                                     name="suffix" 
@@ -142,6 +154,7 @@ export default function FormPersonalInfo(props: Props) {
                             <Form.Item 
                                 name="birth_date" 
                                 label="Birth Date:"
+                                initialValue={initialValues?.birth_date && dayjs(initialValues?.birth_date)}
                                 rules={[
                                     { 
                                         required: true,
@@ -160,7 +173,8 @@ export default function FormPersonalInfo(props: Props) {
                         <Col xs={24} sm={12} md={8} lg={4}>
                             <Form.Item 
                                 name="sex" 
-                                label="Sex:" 
+                                label="Sex:"
+                                initialValue={initialValues?.sex}
                                 rules={[
                                     { 
                                         required: true,
@@ -184,6 +198,7 @@ export default function FormPersonalInfo(props: Props) {
                                         name="civil_status" 
                                         label="Civil Status:"
                                         className='w-full'
+                                        initialValue={initialValues?.civil_status}
                                         rules={[
                                             { 
                                                 required: true,
@@ -207,6 +222,7 @@ export default function FormPersonalInfo(props: Props) {
                                         name="spouse_first_name" 
                                         label="Spouse First Name:"
                                         className='w-full'
+                                        initialValue={initialValues?.spouse_first_name}
                                         rules={
                                             employeeInfo?.civil_status == "M" ? [
                                                 { 
@@ -229,6 +245,7 @@ export default function FormPersonalInfo(props: Props) {
                                         name="spouse_middle_name" 
                                         label="Spouse Middle Name:"
                                         className='w-full'
+                                        initialValue={initialValues?.spouse_middle_name}
                                         rules={
                                             employeeInfo?.civil_status == "M" ? [
                                                 { 
@@ -251,6 +268,7 @@ export default function FormPersonalInfo(props: Props) {
                                         name="spouse_last_name" 
                                         label="Spouse Last Name:"
                                         className='w-full'
+                                        initialValue={initialValues?.spouse_last_name}
                                         rules={
                                             employeeInfo?.civil_status == "M" ? [
                                                 { 
@@ -271,6 +289,7 @@ export default function FormPersonalInfo(props: Props) {
                                     <Form.Item 
                                         name="spouse_suffix" 
                                         label="Spouse Suffix:"
+                                        initialValue={initialValues?.spouse_suffix}
                                         className='w-full'
                                     >
                                         <Input 
@@ -285,7 +304,8 @@ export default function FormPersonalInfo(props: Props) {
                         <Col xs={24} sm={12} md={8} lg={4}>
                             <Form.Item 
                                 name="mobile_number" 
-                                label="Mobile Number:" 
+                                label="Mobile Number:"
+                                initialValue={initialValues?.mobile_number}
                                 rules={[
                                     { 
                                         required: true,
@@ -309,7 +329,8 @@ export default function FormPersonalInfo(props: Props) {
                         <Col xs={24} sm={12} md={8} lg={4}>
                             <Form.Item 
                                 name="email_address" 
-                                label="Email Address:" 
+                                label="Email Address:"
+                                initialValue={initialValues?.email_address}
                                 rules={[
                                     { 
                                         required: true,
@@ -335,7 +356,8 @@ export default function FormPersonalInfo(props: Props) {
                                 <Col md={6} flex="auto">
                                     <Form.Item 
                                         name="emerg_contact_person" 
-                                        label="Contact Person:" 
+                                        label="Contact Person:"
+                                        initialValue={initialValues?.emerg_contact_person} 
                                         rules={[
                                             { 
                                                 required: true,
@@ -352,7 +374,8 @@ export default function FormPersonalInfo(props: Props) {
                                 <Col md={6} flex="auto">
                                     <Form.Item 
                                         name="emerg_mobile_number" 
-                                        label="Contact Number:" 
+                                        label="Contact Number:"
+                                        initialValue={initialValues?.emerg_mobile_number} 
                                         rules={[
                                             { 
                                                 required: true,

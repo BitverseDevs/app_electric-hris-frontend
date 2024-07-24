@@ -1,19 +1,56 @@
 import { PlusOutlined, LoadingOutlined } from '@ant-design/icons';
-import { Form, GetProp, message, Upload, UploadProps } from 'antd';
-import { useState } from 'react';
+import { Avatar, Button, Form, GetProp, message, Upload, UploadProps } from 'antd';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { RcFile } from 'antd/es/upload';
+import { FileUploadType } from '@/types/employee-type';
 
-export default function ProfilePicture() {
+
+interface Props {
+    initialFile: any | null | undefined
+    initialURL: string | null
+}
+
+type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
+
+export default function ProfilePicture(props: Props) {
+
+    const { initialFile, initialURL } = props
 
     const [loading, setLoading] = useState(false);
-    const [imageUrl, setImageUrl] = useState<string>();
+    const [imageUrl, setImageUrl] = useState<string | null>(null);
 
-    type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
+    useEffect(() => {
+
+        if(initialFile) {
+
+            setInitialImageFile(initialFile?.file?.originFileObj)
+
+        } else if(initialURL) {
+
+            setImageUrl(currUrl => `${process.env.NEXT_PUBLIC_API_BASE_URL}/${initialURL}` )
+
+        }
+
+    }, [])
+
+    const setInitialImageFile = (file: File) => {
+        getBase64(file as FileType, (url) => {
+            setLoading(false);
+            setImageUrl(url);
+        })
+    }
+
+    
     
     const getBase64 = (img: FileType, callback: (url: string) => void) => {
-        const reader = new FileReader();
-        reader.addEventListener('load', () => callback(reader.result as string));
-        reader.readAsDataURL(img);
+
+        if(img) {
+            const reader = new FileReader();
+            reader.addEventListener('load', () => callback(reader.result as string));
+            reader.readAsDataURL(img);
+        }
+
     };
 
     const validateImage = (file: FileType) => {
@@ -46,12 +83,12 @@ export default function ProfilePicture() {
 
     };
 
-    const uploadButton = (
-        <button style={{ border: 0, background: 'none' }} type="button">
-            {loading ? <LoadingOutlined /> : <PlusOutlined />}
-            <div style={{ marginTop: 8 }}>Upload</div>
-        </button>
-    );
+    // const uploadButton = (
+    //     <button style={{ border: 0, background: 'none' }} type="button">
+    //         {loading ? <LoadingOutlined /> : <PlusOutlined />}
+    //         <div style={{ marginTop: 8 }}>Upload</div>
+    //     </button>
+    // );
 
     const customRequest = ({ file, onSuccess, onError }: any) => {
         onSuccess("ok"); 
@@ -59,9 +96,42 @@ export default function ProfilePicture() {
 
 
     return (   
+        // <Form.Item
+        //     name="employee_image"
+        //     label="Profile Picture"
+        //     initialValue={initialFile}
+        //     rules={[
+        //         { 
+        //             required: true,
+        //             message: "Profile Picture is required"
+        //         },
+        //     ]}
+        // >
+        //     <Upload
+        //         name="avatar"
+        //         listType="picture-circle"
+        //         className="avatar-uploader"
+        //         showUploadList={false}
+        //         // action={action}
+        //         beforeUpload={beforeUpload}
+        //         onChange={handleChange}
+        //         customRequest={customRequest}
+        //     >
+        //         {imageUrl ? 
+        //             <img
+        //                 src={imageUrl} 
+        //                 alt="avatar" 
+        //                 className='h-full w-full rounded-full'
+        //             />
+        //             : uploadButton
+        //         }
+        //     </Upload>
+        // </Form.Item>    
+        
         <Form.Item
             name="employee_image"
-            label="Profile Picture" 
+            label="Profile Picture"
+            initialValue={initialFile}
             rules={[
                 { 
                     required: true,
@@ -71,24 +141,26 @@ export default function ProfilePicture() {
         >
             <Upload
                 name="avatar"
-                listType="picture-circle"
+                listType="picture"
                 className="avatar-uploader"
                 showUploadList={false}
-                // action={action}
                 beforeUpload={beforeUpload}
                 onChange={handleChange}
-                customRequest={customRequest}
+                fileList={[]}
             >
-                {imageUrl ? 
-                    <img
-                        src={imageUrl} 
-                        alt="avatar" 
-                        className='h-full w-full rounded-full'
-                    />
-                    : uploadButton
-                }
+                <Avatar
+                    size={128}
+                    icon={imageUrl ? null : <PlusOutlined />}
+                    src={imageUrl}
+                    style={{ marginBottom: 20 }}
+                >
+                    <Button icon={<LoadingOutlined />} loading={loading}>
+                        {loading ? 'Uploading' : 'Upload'}
+                    </Button>
+                </Avatar>
             </Upload>
-        </Form.Item>                     
+        </Form.Item> 
+    
 
     )
 }

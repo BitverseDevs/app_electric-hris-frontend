@@ -1,13 +1,13 @@
-import { EmployeeDetails } from "@/types"
+import { EmployeeDataType, PayrollInfoType,  } from "@/types/employee-type";
 import { Button, Col, Form, FormProps, Input, InputNumber, Radio, Row, Typography } from "antd";
 
 interface Props {
-    initialValues: EmployeeDetails | null
+    initialValues: EmployeeDataType | null
     children?: React.ReactNode;
-    onSubmit: () => void | null
+    onSubmit: (values: PayrollInfoType) => void | null
 }
 
-export default function Payroll (props:Props) {
+export default function FormPayrollInfo (props:Props) {
     
     const { initialValues, onSubmit, children} = props
     const { Text, Link, Title} = Typography;
@@ -16,10 +16,8 @@ export default function Payroll (props:Props) {
 
     const onFinish: FormProps['onFinish'] = (values) => {
 
-        if(onSubmit) onSubmit()
+        onSubmit(values)
     };
-
-    // const cardStyle = 'shadow-2xl w-full p-4 rounded-sm border-2 border-purple-300'
 
     return (
         <div className="">
