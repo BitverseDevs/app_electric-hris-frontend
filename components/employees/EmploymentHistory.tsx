@@ -1,4 +1,4 @@
-import { EmployeeDetails, FamilyMembers } from "@/types";
+import { FamilyMembers } from "@/types";
 import { Button, Form, Modal, Table, Tabs, TabsProps, Typography } from "antd";
 import { useState } from "react";
 import FormAddFamilyMember from "./family-background/FormAddFamilyMember";
@@ -8,7 +8,7 @@ import { useModalStore } from "@/store/modalStore";
 import { useScreenStore } from "@/store/screenStore";
 
 interface Props {
-    employeeDetails: EmployeeDetails
+    employeeDetails: any
     setEmployeeDetails: any
 }
 

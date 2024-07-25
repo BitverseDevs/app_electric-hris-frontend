@@ -1,4 +1,4 @@
-import { EmployeeDetails, PreviousEmployer } from "@/types"
+import { PreviousEmployer } from "@/types"
 import { Button, Form, Input, Modal, Table } from "antd";
 import { useForm } from "antd/es/form/Form";
 import FormAddPreviousEmployer from "./BIR/FormAddPreviousEmployer";
@@ -8,7 +8,7 @@ import { useModalStore } from "@/store/modalStore";
 import { useScreenStore } from "@/store/screenStore";
 
 interface Props {
-    employeeDetails: EmployeeDetails
+    employeeDetails: any
     setEmployeeDetails: any
 }
 

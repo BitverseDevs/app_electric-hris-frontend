@@ -1,4 +1,3 @@
-import { EmployeeDetails } from "@/types"
 import { Button, Col, Form, FormProps, Input, InputNumber, Row, Typography } from "antd";
 import { useRef, useState } from "react";
 import SSS from "./government-contributions/SSS";
@@ -8,7 +7,7 @@ import Tax from "./government-contributions/Tax";
 import { formatTextToNumber } from "@/utils/format-text";
 
 interface Props {
-    employeeDetails: EmployeeDetails
+    employeeDetails: any
     setEmployeeDetails: any
 }
 
