@@ -1,4 +1,4 @@
-import { EmployeeDetails } from "@/types"
+
 import { Button, Col, Form, FormProps, Input, InputNumber, Radio, Row, Typography } from "antd";
 
 interface Props {
