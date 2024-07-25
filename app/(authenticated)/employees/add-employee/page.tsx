@@ -2,13 +2,13 @@
 
 import React, { useEffect, useState } from 'react';
 import { Button, Select, Space, Tabs } from 'antd';
-import FormPersonalInfo from '@/components/employees/FormPersonalInfo';
 import type { TabsProps } from 'antd';
 import Payroll from '@/components/employees/Payroll';
 import GovernmentContribution from '@/components/employees/GovernmentContribution';
 import BIR from '@/components/employees/BIR';
 import FamilyBackground from '@/components/employees/FamilyBackground';
 import EmploymentHistory from '@/components/employees/EmploymentHistory';
+import FormPersonalInfo from '@/components/employees/forms/FormPersonalInfo';
 
 export default function AddNewEmployee() {
 
@@ -61,11 +61,7 @@ export default function AddNewEmployee() {
       {
         key: '1',
         label: 'Personal Information',
-        children: 
-        <FormPersonalInfo
-          employeeDetails={employeeDetails}
-          setEmployeeDetails={setEmployeeDetails}
-        />,
+        children: <div>hi</div>
       },
       {
         key: '2',
