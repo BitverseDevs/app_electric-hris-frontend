@@ -26,7 +26,7 @@ export default function SubRMenu(props:Props){
                     Array.isArray(subRoutes) 
                         && subRoutes.map((sub: any, index: number) => 
                             <li className={`transition-all duration-500 hover:bg-blue-100 ${isActiveRoute(sub.link)? 'bg-blue-100':''} flex justify-between `} key={index}>
-                                <Link className="flex gap-4 pl-20 py-4" href={sub.link}>
+                                <Link className="flex gap-4 pl-20 py-4 w-full" href={sub.link}>
                                     <span>{sub.icon}</span>
                                     <div className={`transition-all overflow-hidden`}>
                                         {sub.name}

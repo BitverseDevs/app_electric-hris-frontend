@@ -7,6 +7,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { Suspense } from "react";
 import Loading from "./loading";
+import Navigation from "@/components/layout/Navigation";
 // import Loading from "./employees/loading";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,7 +22,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
 
   return (
 
@@ -29,6 +29,7 @@ export default function RootLayout({
         <SideBar />
         <div className="h-screen w-full overflow-y-auto">
           <Header />
+          <Navigation />
           <Suspense fallback={<Loading />}>
             {children}
           </Suspense>
