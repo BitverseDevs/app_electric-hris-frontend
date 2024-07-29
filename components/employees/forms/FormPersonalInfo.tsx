@@ -12,16 +12,17 @@ import api from '@/utils/axios-config';
 import ProfilePicture from '../personal-information/ProfilePicture';
 
 // TYPES
-import { EmployeeDataType, PersonalInfoType } from '@/types/employee-type';
+import { EmployeeDataType, PersonalInfoType } from '@/types/employee';
 
 interface Props {
     initialValues: EmployeeDataType | null
+    readOnly: boolean
 }
 
 export default function FormPersonalInfo(props: Props) {
 
     const { Text, Link, Title} = Typography;    
-    const { initialValues } = props
+    const { initialValues, readOnly } = props
     //STATES
     const [employeeInfo, setEmployeeInfo] = useState<PersonalInfoType| null>(null)
 
@@ -43,6 +44,7 @@ export default function FormPersonalInfo(props: Props) {
                         <ProfilePicture 
                             initialFile={initialValues?.employee_image} 
                             initialURL={null}
+                            disabled={readOnly}
                         />
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={4}>
@@ -52,13 +54,14 @@ export default function FormPersonalInfo(props: Props) {
                             initialValue={initialValues?.first_name}
                             rules={[
                                 { 
-                                    required: true,
+                                    required: !readOnly,
                                     message: 'Please input First Name' 
                                 },
                             ]}
                         >
                             <Input 
-                                name="first_name"                                
+                                name="first_name"
+                                readOnly={readOnly}                                
                             />
                         </Form.Item>
                     </Col>
@@ -70,13 +73,14 @@ export default function FormPersonalInfo(props: Props) {
                             initialValue={initialValues?.middle_name}
                             rules={[
                                 { 
-                                    required: true,
+                                    required: !readOnly,
                                     message: 'Please input Middle Name' 
                                 }
                             ]}
                         >
                             <Input
-                                name="middle_name" 
+                                name="middle_name"
+                                readOnly={readOnly} 
                             />
                         </Form.Item>
                     </Col>
@@ -88,13 +92,14 @@ export default function FormPersonalInfo(props: Props) {
                             initialValue={initialValues?.last_name}
                             rules={[
                                 { 
-                                    required: true,
+                                    required: !readOnly,
                                     message: 'Please input Last name' 
                                 }
                             ]}
                         >
                             <Input 
-                                name="last_name" 
+                                name="last_name"
+                                readOnly={readOnly} 
                             />
                         </Form.Item>
                     </Col>
@@ -106,8 +111,8 @@ export default function FormPersonalInfo(props: Props) {
                             initialValue={initialValues?.suffix}
                         >
                             <Input 
-                                name="suffix" 
-                                
+                                name="suffix"
+                                readOnly={readOnly}  
                             />
                         </Form.Item>
                     </Col>
@@ -119,14 +124,15 @@ export default function FormPersonalInfo(props: Props) {
                             initialValue={initialValues?.birth_date && dayjs(initialValues?.birth_date)}
                             rules={[
                                 { 
-                                    required: true,
+                                    required: !readOnly,
                                     message: "Please input Birth Date" 
                                 },
                             ]}
                         >
                             <DatePicker 
                                 className='w-full'
-                                name="birth_date" 
+                                name="birth_date"
+                                disabled={readOnly} 
                                 // onChange={(date:Date, dateString:string | string []) => handleDateChange('birth_date', date, dateString)}
                             />
                         </Form.Item>
@@ -139,12 +145,13 @@ export default function FormPersonalInfo(props: Props) {
                             initialValue={initialValues?.sex}
                             rules={[
                                 { 
-                                    required: true,
+                                    required: !readOnly,
                                     message: 'Please Select Sex' 
                                 }
                             ]}
                         >
-                            <Select 
+                            <Select
+                                disabled={readOnly}
                                 options={[
                                     { value: 'male', label: 'Male' },
                                     { value: 'female', label: 'Female' },
@@ -163,12 +170,13 @@ export default function FormPersonalInfo(props: Props) {
                                     initialValue={initialValues?.civil_status}
                                     rules={[
                                         { 
-                                            required: true,
+                                            required: !readOnly,
                                             message: 'Please Select Civil Status' 
                                         }
                                     ]}
                                 >
                                     <Select
+                                        disabled={readOnly} 
                                         onChange={(value:string) => handleSelectChange("civil_status", value)}
                                         options={[
                                             { value: 'S', label: 'Single' },
@@ -189,13 +197,14 @@ export default function FormPersonalInfo(props: Props) {
                                     rules={
                                         employeeInfo?.civil_status == "M" ? [
                                             { 
-                                                required: true,
+                                                required: !readOnly,
                                                 message: 'Please input Spouse First Name' 
                                             },
                                         ]: []
                                     }
                                 >
                                     <Input 
+                                        readOnly={readOnly} 
                                         name="spouse_first_name" 
                                         disabled={employeeInfo?.civil_status != "M"}
                                         
@@ -212,13 +221,14 @@ export default function FormPersonalInfo(props: Props) {
                                     rules={
                                         employeeInfo?.civil_status == "M" ? [
                                             { 
-                                                required: true,
+                                                required: !readOnly,
                                                 message: 'Please input Spouse Middle Name' 
                                             },
                                         ]: []
                                     }
                                 >
-                                    <Input 
+                                    <Input
+                                        readOnly={readOnly} 
                                         name="spouse_middle_name" 
                                         disabled={employeeInfo?.civil_status != "M"}
                                         
@@ -235,13 +245,14 @@ export default function FormPersonalInfo(props: Props) {
                                     rules={
                                         employeeInfo?.civil_status == "M" ? [
                                             { 
-                                                required: true,
+                                                required: !readOnly,
                                                 message: 'Please input Spouse Last Name' 
                                             },
                                         ]: []
                                     }
                                 >
-                                    <Input 
+                                    <Input
+                                        readOnly={readOnly} 
                                         name="spouse_last_name" 
                                         disabled={employeeInfo?.civil_status != "M"}
                                         
@@ -255,7 +266,8 @@ export default function FormPersonalInfo(props: Props) {
                                     initialValue={initialValues?.spouse_suffix}
                                     className='w-full'
                                 >
-                                    <Input 
+                                    <Input
+                                        readOnly={readOnly} 
                                         name="spouse_suffix" 
                                         disabled={employeeInfo?.civil_status != "M"}
                                         
@@ -271,7 +283,7 @@ export default function FormPersonalInfo(props: Props) {
                             initialValue={initialValues?.mobile_number}
                             rules={[
                                 { 
-                                    required: true,
+                                    required: !readOnly,
                                     message: 'Please input Mobile Number' 
                                 },
                                 {
@@ -281,6 +293,7 @@ export default function FormPersonalInfo(props: Props) {
                             ]}
                         >
                             <Input
+                                readOnly={readOnly} 
                                 addonBefore="+63"
                                 name="mobile_number"
                                 placeholder='9123456789'
@@ -296,7 +309,7 @@ export default function FormPersonalInfo(props: Props) {
                             initialValue={initialValues?.email_address}
                             rules={[
                                 { 
-                                    required: true,
+                                    required: !readOnly,
                                     message: 'Please input Email Address' 
                                 },
                                 {
@@ -306,6 +319,7 @@ export default function FormPersonalInfo(props: Props) {
                             ]}
                         >
                             <Input
+                                readOnly={readOnly}
                                 name="email_address" 
                                 placeholder='boyax@gmail.com'
                                 
@@ -323,14 +337,14 @@ export default function FormPersonalInfo(props: Props) {
                                     initialValue={initialValues?.emerg_contact_person} 
                                     rules={[
                                         { 
-                                            required: true,
+                                            required: !readOnly,
                                             message: 'Please input contact person' 
                                         },
                                     ]}
                                 >
                                     <Input
                                         name="emerg_contact_person" 
-                                        
+                                        readOnly={readOnly} 
                                     />
                                 </Form.Item>
                             </Col>
@@ -341,7 +355,7 @@ export default function FormPersonalInfo(props: Props) {
                                     initialValue={initialValues?.emerg_mobile_number} 
                                     rules={[
                                         { 
-                                            required: true,
+                                            required: !readOnly,
                                             message: 'Please input Contact Number' 
                                         },
                                         {
@@ -355,7 +369,7 @@ export default function FormPersonalInfo(props: Props) {
                                         name="emerg_mobile_number" 
                                         placeholder='9123456789'
                                         maxLength={10}
-                                        
+                                        readOnly={readOnly} 
                                     />
                                 </Form.Item>
                             </Col>

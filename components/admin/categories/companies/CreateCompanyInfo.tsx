@@ -27,7 +27,7 @@ export default function CreateCompanyInfo() {
             fn: async () => {
                 await api.post("/create-new-company")
             },
-            onSuccess: () => {
+            onSuccess: (res) => {
                 handleCloseModal()
             },
             onFail: null,

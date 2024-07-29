@@ -3,19 +3,20 @@ import { Avatar, Button, Form, GetProp, message, Upload, UploadProps } from 'ant
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { RcFile } from 'antd/es/upload';
-import { FileUploadType } from '@/types/employee-type';
+import { FileUploadType } from '@/types/employee';
 
 
 interface Props {
     initialFile: any | null | undefined
     initialURL: string | null
+    disabled: boolean
 }
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
 export default function ProfilePicture(props: Props) {
 
-    const { initialFile, initialURL } = props
+    const { initialFile, initialURL, disabled } = props
 
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -83,58 +84,15 @@ export default function ProfilePicture(props: Props) {
 
     };
 
-    // const uploadButton = (
-    //     <button style={{ border: 0, background: 'none' }} type="button">
-    //         {loading ? <LoadingOutlined /> : <PlusOutlined />}
-    //         <div style={{ marginTop: 8 }}>Upload</div>
-    //     </button>
-    // );
 
-    const customRequest = ({ file, onSuccess, onError }: any) => {
-        onSuccess("ok"); 
-    };
-
-
-    return (   
-        // <Form.Item
-        //     name="employee_image"
-        //     label="Profile Picture"
-        //     initialValue={initialFile}
-        //     rules={[
-        //         { 
-        //             required: true,
-        //             message: "Profile Picture is required"
-        //         },
-        //     ]}
-        // >
-        //     <Upload
-        //         name="avatar"
-        //         listType="picture-circle"
-        //         className="avatar-uploader"
-        //         showUploadList={false}
-        //         // action={action}
-        //         beforeUpload={beforeUpload}
-        //         onChange={handleChange}
-        //         customRequest={customRequest}
-        //     >
-        //         {imageUrl ? 
-        //             <img
-        //                 src={imageUrl} 
-        //                 alt="avatar" 
-        //                 className='h-full w-full rounded-full'
-        //             />
-        //             : uploadButton
-        //         }
-        //     </Upload>
-        // </Form.Item>    
-        
+    return (     
         <Form.Item
             name="employee_image"
             label="Profile Picture"
             initialValue={initialFile}
             rules={[
                 { 
-                    required: true,
+                    required: !disabled,
                     message: "Profile Picture is required"
                 },
             ]}
@@ -147,6 +105,7 @@ export default function ProfilePicture(props: Props) {
                 beforeUpload={beforeUpload}
                 onChange={handleChange}
                 fileList={[]}
+                disabled={disabled}
             >
                 <Avatar
                     size={128}

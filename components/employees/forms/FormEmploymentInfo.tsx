@@ -1,14 +1,15 @@
-import { EmployeeDataType, EmploymentInfoType } from "@/types/employee-type";
+import { EmployeeDataType, EmploymentInfoType } from "@/types/employee";
 import { Col, DatePicker, Form, FormProps, Input, Row, Select, Typography } from "antd";
 import dayjs from "dayjs";
 
 interface Props {
     initialValues: EmployeeDataType | null
+    readOnly: boolean
 }
 
 export default function FormEmploymentInfo(props:Props) {
 
-    const { initialValues } = props
+    const { initialValues, readOnly } = props
     const { Text, Link, Title} = Typography;
 
     const companyOptions = [
@@ -29,7 +30,7 @@ export default function FormEmploymentInfo(props:Props) {
     
 
     return(
-        <div className="">
+        <div className="my-4">
             <Title level={3}>Employment Information</Title>
             <Row gutter={[16, 16]}> 
                 <Col xs={24} sm={12} md={8} lg={4}>
@@ -40,11 +41,13 @@ export default function FormEmploymentInfo(props:Props) {
                             initialValue={initialValues?.date_hired? dayjs(initialValues.date_hired): ""} 
                             rules={[
                                 { 
-                                    required: true,
+                                    required: !readOnly,
                                 },
                             ]}
                         >
-                            <DatePicker />
+                            <DatePicker 
+                                disabled={readOnly}
+                            />
                         </Form.Item>
                 </Col>
 
@@ -56,11 +59,12 @@ export default function FormEmploymentInfo(props:Props) {
                         initialValue={initialValues?.employee_number}
                         rules={[
                             { 
-                                required: true,
+                                required: !readOnly,
                             },
                         ]}
                     >
-                        <Input 
+                        <Input
+                            readOnly={readOnly}
                             name="employee_number"               
                         />
                     </Form.Item>
@@ -73,12 +77,13 @@ export default function FormEmploymentInfo(props:Props) {
                         initialValue={initialValues?.company_id}
                         rules={[
                             { 
-                                required: true,
+                                required: !readOnly,
                                 message: 'Please Select Company' 
                             },
                         ]}
                     >
                         <Select
+                            disabled={readOnly}
                             showSearch
                             placeholder="Select a company"
                             filterOption={(input, option) =>
@@ -97,12 +102,13 @@ export default function FormEmploymentInfo(props:Props) {
                         initialValue={initialValues?.position_id}
                         rules={[
                             { 
-                                required: true,
+                                required: !readOnly,
                                 message: 'Please Select Position' 
                             },
                         ]}
                     >
                         <Select
+                            disabled={readOnly}
                             showSearch
                             placeholder="Select a position"
                             filterOption={(input, option) =>
@@ -121,12 +127,13 @@ export default function FormEmploymentInfo(props:Props) {
                         initialValue={initialValues?.role_id}
                         rules={[
                             { 
-                                required: true,
+                                required: !readOnly,
                                 message: 'Please Select Role' 
                             },
                         ]}
                     >
                         <Select
+                            disabled={readOnly}
                             showSearch
                             placeholder="Select a role"
                             filterOption={(input, option) =>

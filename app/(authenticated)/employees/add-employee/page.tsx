@@ -108,8 +108,6 @@ export default function AddNewEmployee() {
             setEmployeeDetails={setEmployeeDetails}
           />,
       },
-
-      
     ];
 
     return (

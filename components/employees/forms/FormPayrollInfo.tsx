@@ -1,17 +1,18 @@
-import { EmployeeDataType, PayrollInfoType,  } from "@/types/employee-type";
+import { EmployeeDataType, PayrollInfoType,  } from "@/types/employee";
 import { Button, Col, Form, FormProps, Input, InputNumber, Radio, Row, Typography } from "antd";
 
 interface Props {
     initialValues: EmployeeDataType | null
+    readOnly: boolean
 }
 
 export default function FormPayrollInfo (props:Props) {
     
-    const { initialValues } = props
+    const { initialValues, readOnly } = props
     const { Text, Link, Title} = Typography;
 
     return (
-        <div className="">
+        <div className="my-4">
             <Title level={3}>Payroll Information</Title>
             <Row gutter={[16, 16]}> 
                 <Col
@@ -28,12 +29,12 @@ export default function FormPayrollInfo (props:Props) {
                             initialValue={initialValues?.computation_type}
                             rules={[
                                 { 
-                                    required: true,
+                                    required: !readOnly,
                                     message: 'Please Select Computation Type' 
                                 },
                             ]}
                         >
-                            <Radio.Group>
+                            <Radio.Group disabled={readOnly}>
                                 <Radio value='monthly'>Monthly Rate</Radio>
                                 <Radio value='daily'>Daily Rate</Radio>
                                 <Radio value='hourly'>Hourly Rate</Radio>
@@ -46,12 +47,13 @@ export default function FormPayrollInfo (props:Props) {
                             initialValue={initialValues?.rate}
                             rules={[
                                 { 
-                                    required: true,
+                                    required: !readOnly,
                                     message: 'Please Input Rate' 
                                 },
                             ]}
                         >
                             <InputNumber
+                                readOnly={readOnly}
                                 min={0} 
                                 name="rate" 
                                 placeholder='0'
@@ -74,12 +76,13 @@ export default function FormPayrollInfo (props:Props) {
                             initialValue={initialValues?.bank_name}
                             rules={[
                                 { 
-                                    required: true,
+                                    required: !readOnly,
                                     message: 'Please Input Bank Name' 
                                 },
                             ]}
                         >
-                            <Input 
+                            <Input
+                                readOnly={readOnly}
                                 type='text' 
                                 name="bank_name" 
                                 placeholder='BPI/ Landbank/ UAB'
@@ -92,12 +95,13 @@ export default function FormPayrollInfo (props:Props) {
                             initialValue={initialValues?.account_number}
                             rules={[
                                 { 
-                                    required: true,
+                                    required: !readOnly,
                                     message: 'Please Input Account Number' 
                                 },
                             ]}
                         >
-                            <Input 
+                            <Input
+                                readOnly={readOnly}
                                 type='text' 
                                 name="account_number" 
                                 placeholder='123456789'

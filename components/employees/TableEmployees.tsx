@@ -6,6 +6,8 @@ import { Button, Input, InputRef, Pagination, Space, Table, TableColumnType, Tab
 import type { FilterDropdownProps } from 'antd/es/table/interface';
 import { useRef, useState } from "react";
 import CardList from '../CardList';
+import ViewEmployeeInfo from './ViewEmployeeInfo';
+import { useModalStore } from '@/store/modalStore';
 
 
 interface DataType {
@@ -18,47 +20,12 @@ type DataIndex = keyof DataType;
 
 export default function TableEmployees() {
 
-    // const columns = [
-    //     {
-    //         field: "emp_no",
-    //         name: "Employee No.",
-    //     },
-    //     {
-    //         field: "emp_name",
-    //         name: "Employee Name",
-    //     },
-    //     {
-    //         field: "age",
-    //         name: "Age",
-    //     }
-    // ]
-
-    // const data = [
-    //     {
-    //         emp_no: 1,
-    //         emp_name: "Boyax",
-    //         age: 28
-    //     },
-    //     {
-    //         emp_no: 2,
-    //         emp_name: "Jhumz",
-    //         age: 28
-    //     },
-    //     {
-    //         emp_no: 3,
-    //         emp_name: "Bogart",
-    //         age: 28
-    //     },
-    //     {
-    //         emp_no: 4,
-    //         emp_name: "Box",
-    //         age: 30
-    //     }
-    // ]
 
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef<InputRef>(null);
+    const {setModal} = useModalStore((state: any) => state)
+    const [selectedRow, setSelectedRow] = useState<any>(null)
   
     const handleSearch = (selectedKeys: string[], confirm: FilterDropdownProps['confirm'], dataIndex: DataIndex ) => 
     {
@@ -295,6 +262,14 @@ export default function TableEmployees() {
                     columns={columns} 
                     dataSource={data} 
                     onChange={onChange}
+                    onRow={(record, index) => (
+                        {
+                            onClick:(e:any) => { 
+                                setSelectedRow((curr:any) => record)
+                                setModal("showViewEmployeeModal", true)
+                            }
+                        }
+                    )}
                 />
             </div>
 
@@ -311,6 +286,8 @@ export default function TableEmployees() {
                     excludeKeys={['id', 'key']}
                 />
             </div>
+
+            <ViewEmployeeInfo userID={selectedRow?.id} />
         </div>
     )
 }   

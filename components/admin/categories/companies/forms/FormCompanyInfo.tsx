@@ -23,7 +23,7 @@ export default function FormCompanyInfo(props: Props) {
                             }
                         ]}
                     >
-                        <Input />
+                        <Input readOnly={readOnly}/>
                     </Form.Item>
                 </Col>
 
@@ -38,7 +38,7 @@ export default function FormCompanyInfo(props: Props) {
                             }
                         ]}
                     >
-                        <Input/>
+                        <Input readOnly={readOnly}/>
                     </Form.Item>
                 </Col>
             </Row>

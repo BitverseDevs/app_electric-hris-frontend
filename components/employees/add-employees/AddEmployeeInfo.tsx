@@ -4,7 +4,7 @@ import { useModalStore } from "@/store/modalStore";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import FormPayrollInfo from "../forms/FormPayrollInfo";
 import FormEmploymentInfo from "../forms/FormEmploymentInfo";
-import { EmployeeDataType, EmploymentInfoType, PayrollInfoType, PersonalInfoType } from "@/types/employee-type";
+import { EmployeeDataType, EmploymentInfoType, PayrollInfoType, PersonalInfoType } from "@/types/employee";
 import { useQuery } from "@/hooks/useQuery";
 import api from "@/utils/axios-config";
 
@@ -93,12 +93,12 @@ export default function AddEmployeeInfo() {
         query(
             {
                 fn: async() => await api.post("/hahahaha"), 
-                onSuccess: () => {
+                onSuccess: (res) => {
                     resetForms()
                     setCurrent(curr => 0)
                     setModal("showAddEmployeeModal", false)
                 },
-                onFail: () => {
+                onFail: (err) => {
                     console.log("ughh")
                 },
                 successMessage: "Succesfully Add New Employee"
@@ -122,26 +122,29 @@ export default function AddEmployeeInfo() {
         {
           title: 'Personal Information',
           content: 
-            <FormPersonalInfo initialValues={employeeData}/>
+            <FormPersonalInfo 
+                initialValues={employeeData}
+                readOnly={false}
+            />
         },
         {
           title: 'Payroll Information',
           content:
-            <FormPayrollInfo initialValues={employeeData} />
+            <FormPayrollInfo 
+                initialValues={employeeData}
+                readOnly={false}
+            />
         },
         {
           title: 'Employment Information',
           content: 
-            <FormEmploymentInfo initialValues={employeeData} />,
+            <FormEmploymentInfo 
+                initialValues={employeeData}
+                readOnly={false}
+            />,
         },
     ];
 
-    const buttonElement = (
-        <div className="flex gap-4">
-            <Button type="primary" onClick={() => handleStepsButton("prev")}>Back</Button>
-            <Button type="primary" htmlType="submit">{current == steps.length-1? "Finish": "Next"}</Button>
-        </div>
-    )
 
     const items = useMemo(() => 
         steps.map((item) => ({ key: item.title, title: item.title }))

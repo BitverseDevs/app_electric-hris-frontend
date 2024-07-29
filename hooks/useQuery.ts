@@ -13,8 +13,8 @@ type StatusType = "loading" | "success" | "error" | "info" | "warning"
 
 type QueryPayloads = {
     fn: () => Promise<any>,
-    onSuccess: (() => void) | null,
-    onFail: (() => void) | null,
+    onSuccess: ((res:any) => void) | null,
+    onFail: ((err:any) => void) | null,
     successMessage: string | null
 }
 
@@ -39,7 +39,7 @@ export const useQuery = () => {
             status: "loading"
         }))
 
-        showAlert("loading", "Loading")
+        showAlert("loading", "Loading", 0)
 
         fn()
             .then(res => {
@@ -50,8 +50,8 @@ export const useQuery = () => {
                     status: "success"
                 }))
 
-                if(onSuccess) onSuccess()
-                showAlert("success", successMessage || "Request Successful")
+                if(onSuccess) onSuccess(res)
+                showAlert("success", successMessage || "Request Successful", 5)
             })
             .catch(err => {
                 setQueryData(curr => ({
@@ -61,15 +61,16 @@ export const useQuery = () => {
                     status: "error"
                 }))
 
-                if(onFail) onFail()
-                showAlert("error", err?.response?.data || "Something Went Wrong")
+                if(onFail) onFail(err)
+                showAlert("error", err?.response?.data || "Something Went Wrong", 5)
             })
     }
-    const showAlert = (status: StatusType, message:string) => {
+    const showAlert = (status: StatusType, message:string, duration:number) => {
         messageApi.open({
             key: 1,
             type: status,
             content: message,
+            duration: duration
         })
     }
 
