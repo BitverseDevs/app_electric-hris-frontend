@@ -12,19 +12,27 @@ export default function Navigation() {
     const path = usePathname()
 
     const routeList = path.split("/")
-    const currentRoutetitle = routeList[routeList.length -1]
+    const currentRouteTitle = routeList[routeList.length -1]
+    const currentRouteTitleArr = currentRouteTitle.split(/[-_]/);
+
+    console.log(currentRouteTitleArr)
+    const cleanRouteTitle = currentRouteTitleArr.map(name => capitalize(name)).join(" ")
+
 
     const items = routeList.map((route:string,index:number) => {
         const url = `${routeList.slice(0, index+1).join('/')}`
+        const routeSplit = route.split(/[-_]/);
+        const cleanRouteName = routeSplit.map(name => capitalize(name)).join(" ")
+
         return {
-            title: <Link href={url}>{capitalize(route)}</Link>
+            title: <Link href={url}>{cleanRouteName}</Link>
         }
     })
     
     return (
         <div className="p-4">
             <Breadcrumb items={items} separator=">"/>
-            <Title level={3}>{capitalize(currentRoutetitle)}</Title>
+            <Title level={3}>{cleanRouteTitle}</Title>
         </div>
     )
 }
