@@ -15,7 +15,6 @@ export default function Navigation() {
     const currentRouteTitle = routeList[routeList.length -1]
     const currentRouteTitleArr = currentRouteTitle.split(/[-_]/);
 
-    console.log(currentRouteTitleArr)
     const cleanRouteTitle = currentRouteTitleArr.map(name => capitalize(name)).join(" ")
 
 

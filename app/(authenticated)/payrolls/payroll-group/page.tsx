@@ -2,14 +2,13 @@
 
 import ActionButton from "@/components/actions/ActionButton";
 import CreatePayrollGroup from "@/components/payrolls/CreatePayrollGroup";
+import EditPayrollGroup from "@/components/payrolls/EditPayrollGroup";
 import { useModalStore } from "@/store/modalStore";
 import { ActionType } from "@/types";
 import { Button, Card, Table } from "antd";
 import { useState } from "react";
 
 export default function PayrollGroup() {
-
-    
     const {showCreatePayrollGroupModal, setModal} = useModalStore((state: any) => state)
     
     const [selectedRow, setSelectedRow] = useState<any>(
@@ -134,6 +133,7 @@ export default function PayrollGroup() {
                 </Table>
             </Card>
             <CreatePayrollGroup />
+            <EditPayrollGroup payroll_group_id={selectedRow.key} />
         </div>
     )
 }

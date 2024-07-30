@@ -3,37 +3,59 @@ import { useModalStore } from "@/store/modalStore";
 import api from "@/utils/axios-config";
 import { Button, Col, Form, FormProps, Input, Modal, Row } from "antd";
 import FormPayrollGroupInfo from "./forms/FormPayrollGroupInfo";
+import { useEffect } from "react";
 
-export default function CreatePayrollGroup () {
+interface Props {
+    payroll_group_id: number | null
+}
 
-    const {showCreatePayrollGroupModal, setModal} = useModalStore((state: any) => state)
+export default function EditPayrollGroup (props: Props) {
+
+    const { payroll_group_id } =props
+
+    const {showEditPayrollGroupModal, setModal} = useModalStore((state: any) => state)
 
     const [form] = Form.useForm()
 
     const {data, loading, status, error, contextHolder:alert, query} = useQuery()
 
     const handleCloseModal = () => {
-        setModal("showCreatePayrollGroupModal", false)
+        setModal("showEditPayrollGroupModal", false)
     }
 
-    const onFinish: FormProps['onFinish'] = (values) => {
+    useEffect(() => {
+        const params = {
+            payroll_group_id: payroll_group_id
+        }
         query({
             fn: async () => {
-                await api.post("/add-payroll-group")
+                await api.post("/view-payroll-group", params)
             },
             onSuccess: (res) => {
                 handleCloseModal()
             },
             onFail: null,
-            successMessage: "Add New Payroll Group Successfully"
+            successMessage: "Edit New Payroll Group Successfully"
         })
-        console.table(values)
+    },[payroll_group_id])
+
+    const onFinish: FormProps['onFinish'] = (values) => {
+        query({
+            fn: async () => {
+                await api.post("/edit-payroll-group")
+            },
+            onSuccess: (res) => {
+                handleCloseModal()
+            },
+            onFail: null,
+            successMessage: "Edit New Payroll Group Successfully"
+        })
     };
 
     return (
         <Modal
             title="Add Payroll Group" 
-            open={showCreatePayrollGroupModal}
+            open={showEditPayrollGroupModal}
             footer={null}
             maskClosable={false}
             onClose={handleCloseModal}
@@ -48,7 +70,10 @@ export default function CreatePayrollGroup () {
                 initialValues={{ remember: true }}
                 onFinish={onFinish}
             >
-                <FormPayrollGroupInfo initialValues={null} readOnly={false}/>
+                <FormPayrollGroupInfo 
+                    initialValues={data} 
+                    readOnly={false}
+                />
                 <Button type="primary">
                     Submit
                 </Button>

@@ -1,12 +1,40 @@
-import { Col, Form, Input, Row } from "antd";
+import { PayrollType } from "@/types/payroll";
+import { Col, Form, Input, Row, Select } from "antd";
 
-export default function FormPayrollGroupInfo(){
+interface Props {
+    initialValues: PayrollType | null
+    readOnly: boolean
+}
+
+export default function FormPayrollGroupInfo(props:Props){
+
+    const { initialValues } = props
+
+    const options = [
+        { 
+            value: 'monthly', 
+            label: 'Monthly' 
+        },
+        { 
+            value: 'bi-monthly', 
+            label: 'Bi-Monthly' 
+        },
+        { 
+            value: 'weekly', 
+            label: 'Weekly' 
+        },
+        { 
+            value: 'daily', 
+            label: 'Daily' 
+        },
+    ]
     return (
         <div className="form-wrapper">
             <Row gutter={[16,16]}>
                 <Col span={24}>
                     <Form.Item
                         name="payroll_name"
+                        initialValue={initialValues?.payroll_name}
                         label="Payroll Name"
                         rules={[
                             {
@@ -20,6 +48,7 @@ export default function FormPayrollGroupInfo(){
 
                 <Col span={24}>
                     <Form.Item
+                        initialValue={initialValues?.frequency}
                         name="frequency"
                         label="Frequency"
                         rules={[
@@ -28,12 +57,18 @@ export default function FormPayrollGroupInfo(){
                             }
                         ]}
                     >
-                        <Input/>
+                        <Select
+                            defaultValue={initialValues?.frequency}
+                            style={{ width: 120 }}
+                            // onChange={handleChange}
+                            options={options}
+                        />
                     </Form.Item>
                 </Col>
 
                 <Col span={24}>
                     <Form.Item
+                        initialValue={initialValues?.description}
                         name="description"
                         label="Description"
                         rules={[
