@@ -22,7 +22,7 @@ export function middleware(request: NextRequest) {
 
   } else {
 
-    if (guestPath.includes(currentPath)) {
+    if (guestPath.includes(currentPath) || currentPath == "/home") {
 
       return Response.redirect(new URL('/', request.url))
 

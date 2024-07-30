@@ -16,6 +16,7 @@ import { GrUserAdmin } from 'react-icons/gr';
 import { FaCcPaypal } from 'react-icons/fa';
 import { RoutesTypes } from '@/types';
 import { useScreenStore } from '@/store/screenStore';
+import { RiPaypalFill } from 'react-icons/ri';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -42,11 +43,6 @@ export default function SideBar() {
                     icon: <BiCategory className='text-2xl'/>,
                     link: "/admin/categories"
                 },
-                {
-                    name: "Payroll",
-                    icon: <FaCcPaypal className='text-2xl'/>,
-                    link: "/admin/payrolls"
-                }
             ]
         },
         {
@@ -54,6 +50,18 @@ export default function SideBar() {
             icon: <BiGroup className='text-2xl' />,
             link: "/employees",
             sub: []
+        },
+        {
+            name: "Payrolls",
+            icon: <FaCcPaypal className='text-2xl' />,
+            link: "/payrolls",
+            sub: [
+                {
+                    name: "Payroll Group",
+                    icon: <RiPaypalFill className='text-2xl'/>,
+                    link: "/payrolls/payroll-group"
+                },
+            ]
         }
     ];
 

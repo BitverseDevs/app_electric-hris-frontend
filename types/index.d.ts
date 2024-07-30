@@ -23,3 +23,5 @@ export interface SubRoutesTypes {
     icon: any,
     link: string | "",
 }
+
+export type ActionType = "edit" | "view" | "delete"

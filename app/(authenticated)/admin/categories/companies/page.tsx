@@ -4,6 +4,7 @@ import ActionButton from "@/components/actions/ActionButton";
 import CreateCompanyInfo from "@/components/admin/categories/companies/CreateCompanyInfo";
 import Maintenance from "@/components/layout/Maintenance";
 import { useModalStore } from "@/store/modalStore";
+import { ActionType } from "@/types";
 import { CompanyType } from "@/types/admin/categories/company";
 import { Button, Card, Table } from "antd";
 import { useEffect, useState } from "react";
@@ -20,9 +21,28 @@ export default function Companies () {
       },
     )
 
-    useEffect(() => {
-      console.log(selectedRow)
-    },[selectedRow])
+    const clickRowAction = (record:any, action:ActionType) => {
+
+      setSelectedRow((curr:any) => record)
+
+      switch(action) {
+
+        case "view":
+          console.log("view")
+          break;
+
+        case "edit":
+          console.log("edit")
+          break
+
+        case "delete":
+          console.log("delete")
+          break
+
+        default:
+          break
+      }
+    }
   
     const columns = [
         {
@@ -42,17 +62,17 @@ export default function Companies () {
             <div className="flex gap-4">
               <ActionButton 
                 actionType="view" 
-                actionFn={() => setSelectedRow((curr:any) => record)} 
+                actionFn={() => clickRowAction(record, "view")} 
                 title="View"
               />
               <ActionButton 
                 actionType="edit" 
-                actionFn={() => setSelectedRow((curr:any) => record)} 
+                actionFn={() => clickRowAction(record, "edit")} 
                 title="Edit"
               />
               <ActionButton 
                 actionType="delete" 
-                actionFn={() => setSelectedRow((curr:any) => record)} 
+                actionFn={() => clickRowAction(record, "delete")} 
                 title="Delete"
               />
             </div>
