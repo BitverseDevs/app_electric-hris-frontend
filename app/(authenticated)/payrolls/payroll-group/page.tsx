@@ -31,7 +31,7 @@ export default function PayrollGroup() {
             break;
   
           case "edit":
-            console.log("edit")
+            setModal("showEditPayrollGroupModal", true)
             break
   
           case "delete":

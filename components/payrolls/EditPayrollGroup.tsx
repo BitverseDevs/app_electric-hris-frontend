@@ -54,7 +54,7 @@ export default function EditPayrollGroup (props: Props) {
 
     return (
         <Modal
-            title="Add Payroll Group" 
+            title="Edit Payroll Group" 
             open={showEditPayrollGroupModal}
             footer={null}
             maskClosable={false}
