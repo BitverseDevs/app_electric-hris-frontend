@@ -1,11 +1,12 @@
 "use client";
 
 import ActionButton from "@/components/actions/ActionButton";
-import CreatePayrollGroup from "@/components/payrolls/CreatePayrollGroup";
-import EditPayrollGroup from "@/components/payrolls/EditPayrollGroup";
+import CreatePayrollGroup from "@/components/payrolls/payroll-group/CreatePayrollGroup";
+import EditPayrollGroup from "@/components/payrolls/payroll-group/EditPayrollGroup";
+import ViewPayrollGroup from "@/components/payrolls/payroll-group/ViewPayrollGroup";
 import { useModalStore } from "@/store/modalStore";
 import { ActionType } from "@/types";
-import { Button, Card, Table } from "antd";
+import { Button, Card, Table, TableColumnsType } from "antd";
 import { useState } from "react";
 
 export default function PayrollGroup() {
@@ -20,34 +21,17 @@ export default function PayrollGroup() {
         },
       )
       
-    const clickRowAction = (record:any, action:ActionType) => {
+    const clickRowAction = (record:any) => {
+      setSelectedRow((curr:any) => record)
+      setModal("showViewPayrollGroupModal", true)
+    }
 
-        setSelectedRow((curr:any) => record)
-  
-        switch(action) {
-  
-          case "view":
-            console.log("view")
-            break;
-  
-          case "edit":
-            setModal("showEditPayrollGroupModal", true)
-            break
-  
-          case "delete":
-            console.log("delete")
-            break
-  
-          default:
-            break
-        }
-      }
-
-    const columns = [
+    const columns: TableColumnsType<any> = [
         {
             title: 'Payroll Name',
             dataIndex: 'payroll_name',
             key: 'payroll_name',
+            fixed: 'left',
         },
         {
             title: 'Frequency',
@@ -59,29 +43,29 @@ export default function PayrollGroup() {
             dataIndex: 'description',
             key: 'description',
         },
-        {
-            title: 'Action',
-            key: 'action',
-            render: (_:any, record:any) => (
-              <div className="flex gap-4">
-                <ActionButton 
-                  actionType="view" 
-                  actionFn={() => clickRowAction(record, "view")} 
-                  title="View"
-                />
-                <ActionButton 
-                  actionType="edit" 
-                  actionFn={() => clickRowAction(record, "edit")} 
-                  title="Edit"
-                />
-                <ActionButton 
-                  actionType="delete" 
-                  actionFn={() => clickRowAction(record, "delete")} 
-                  title="Delete"
-                />
-              </div>
-            ),
-        },
+        // {
+        //     title: 'Action',
+        //     key: 'action',
+        //     render: (_:any, record:any) => (
+        //       <div className="flex gap-4">
+        //         <ActionButton 
+        //           actionType="view" 
+        //           actionFn={() => clickRowAction(record, "view")} 
+        //           title="View"
+        //         />
+        //         <ActionButton 
+        //           actionType="edit" 
+        //           actionFn={() => clickRowAction(record, "edit")} 
+        //           title="Edit"
+        //         />
+        //         <ActionButton 
+        //           actionType="delete" 
+        //           actionFn={() => clickRowAction(record, "delete")} 
+        //           title="Delete"
+        //         />
+        //       </div>
+        //     ),
+        // },
     ]
 
     const data = [
@@ -118,7 +102,8 @@ export default function PayrollGroup() {
                 <Button type="primary" onClick={() => setModal("showCreatePayrollGroupModal", true)}>Add Payroll Group</Button>
                 <Table
                     columns={columns}
-                    dataSource={data} 
+                    dataSource={data}
+                    scroll={{ x: 'max-content' }}
                     pagination={
                         { 
                             position: ["topLeft", "bottomLeft"], 
@@ -128,12 +113,18 @@ export default function PayrollGroup() {
 
                         }
                     }
+                    onRow={(record, rowIndex) => (
+                      {
+                        onClick: (e) => {clickRowAction(record)}
+                      }
+                    )}
                 >
                     
                 </Table>
             </Card>
             <CreatePayrollGroup />
-            <EditPayrollGroup payroll_group_id={selectedRow.key} />
+            {/* <EditPayrollGroup payroll_group_id={selectedRow.key} /> */}
+            <ViewPayrollGroup payroll_group_id={selectedRow?.key} />
         </div>
     )
 }

@@ -49,9 +49,9 @@ table th, td {
   @apply p-4
 }
 
-tr:nth-child(even) {
-  @apply bg-slate-200
-}
+/* tr:nth-child(even) {
+  @apply bg-slate-100
+} */
 
 thead {
   @apply border-b border-slate-500

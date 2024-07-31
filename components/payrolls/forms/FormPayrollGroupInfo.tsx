@@ -1,5 +1,6 @@
 import { PayrollType } from "@/types/payroll";
 import { Col, Form, Input, Row, Select } from "antd";
+import { read } from "fs";
 
 interface Props {
     initialValues: PayrollType | null
@@ -8,7 +9,7 @@ interface Props {
 
 export default function FormPayrollGroupInfo(props:Props){
 
-    const { initialValues } = props
+    const { initialValues, readOnly } = props
 
     const options = [
         { 
@@ -38,11 +39,11 @@ export default function FormPayrollGroupInfo(props:Props){
                         label="Payroll Name"
                         rules={[
                             {
-                                required:true
+                                required:!readOnly
                             }
                         ]}
                     >
-                        <Input/>
+                        <Input readOnly={readOnly}/>
                     </Form.Item>
                 </Col>
 
@@ -53,13 +54,14 @@ export default function FormPayrollGroupInfo(props:Props){
                         label="Frequency"
                         rules={[
                             {
-                                required:true
+                                required:!readOnly
                             }
                         ]}
                     >
                         <Select
+                            disabled={readOnly}
                             defaultValue={initialValues?.frequency}
-                            style={{ width: 120 }}
+                            className="w-full"
                             // onChange={handleChange}
                             options={options}
                         />
@@ -73,11 +75,11 @@ export default function FormPayrollGroupInfo(props:Props){
                         label="Description"
                         rules={[
                             {
-                                required:true
+                                required:!readOnly
                             }
                         ]}
                     >
-                        <Input.TextArea autoSize/>
+                        <Input.TextArea autoSize readOnly={readOnly}/>
                     </Form.Item>
                 </Col>
             </Row>

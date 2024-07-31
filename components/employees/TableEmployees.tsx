@@ -283,8 +283,9 @@ export default function TableEmployees() {
                 <CardList 
                     titleKey='name'
                     dataList={data}
-                    excludeKeys={['id', 'key']}
-                />
+                    excludeKeys={['id', 'key']} 
+                    onSearch={()=>null}               
+                 />
             </div>
 
             <ViewEmployeeInfo userID={selectedRow?.id} />

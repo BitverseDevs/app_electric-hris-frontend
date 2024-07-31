@@ -17,6 +17,7 @@ import { FaCcPaypal } from 'react-icons/fa';
 import { RoutesTypes } from '@/types';
 import { useScreenStore } from '@/store/screenStore';
 import { RiPaypalFill } from 'react-icons/ri';
+import { FaPesoSign } from 'react-icons/fa6';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -56,6 +57,11 @@ export default function SideBar() {
             icon: <FaCcPaypal className='text-2xl' />,
             link: "/payrolls",
             sub: [
+                {
+                    name: "Payslips",
+                    icon: <FaPesoSign className='text-2xl'/>,
+                    link: "/payrolls/payslips"
+                },
                 {
                     name: "Payroll Group",
                     icon: <RiPaypalFill className='text-2xl'/>,

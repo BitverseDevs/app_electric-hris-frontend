@@ -2,6 +2,7 @@
 
 import ActionButton from "@/components/actions/ActionButton";
 import CreateCompanyInfo from "@/components/admin/categories/companies/CreateCompanyInfo";
+import ViewCompanyInfo from "@/components/admin/categories/companies/ViewCompanyInfo";
 import Maintenance from "@/components/layout/Maintenance";
 import { useModalStore } from "@/store/modalStore";
 import { ActionType } from "@/types";
@@ -12,7 +13,7 @@ import { FaRegEdit, FaRegEye, FaRegTrashAlt } from "react-icons/fa";
 
 export default function Companies () {
     
-    const {showCreateCompanyModal, setModal} = useModalStore((state: any) => state)
+    const {setModal} = useModalStore((state: any) => state)
     const [selectedRow, setSelectedRow] = useState<any>(
       {
         key: '',
@@ -21,27 +22,9 @@ export default function Companies () {
       },
     )
 
-    const clickRowAction = (record:any, action:ActionType) => {
-
+    const clickRowAction = (record:any) => {
       setSelectedRow((curr:any) => record)
-
-      switch(action) {
-
-        case "view":
-          console.log("view")
-          break;
-
-        case "edit":
-          console.log("edit")
-          break
-
-        case "delete":
-          console.log("delete")
-          break
-
-        default:
-          break
-      }
+      setModal("showViewCompanyModal", true)
     }
   
     const columns = [
@@ -55,29 +38,29 @@ export default function Companies () {
           dataIndex: 'description',
           key: 'description',
         },
-        {
-          title: 'Action',
-          key: 'action',
-          render: (_:any, record:any) => (
-            <div className="flex gap-4">
-              <ActionButton 
-                actionType="view" 
-                actionFn={() => clickRowAction(record, "view")} 
-                title="View"
-              />
-              <ActionButton 
-                actionType="edit" 
-                actionFn={() => clickRowAction(record, "edit")} 
-                title="Edit"
-              />
-              <ActionButton 
-                actionType="delete" 
-                actionFn={() => clickRowAction(record, "delete")} 
-                title="Delete"
-              />
-            </div>
-          ),
-        },
+        // {
+        //   title: 'Action',
+        //   key: 'action',
+        //   render: (_:any, record:any) => (
+        //     <div className="flex gap-4">
+        //       <ActionButton 
+        //         actionType="view" 
+        //         actionFn={() => clickRowAction(record, "view")} 
+        //         title="View"
+        //       />
+        //       <ActionButton 
+        //         actionType="edit" 
+        //         actionFn={() => clickRowAction(record, "edit")} 
+        //         title="Edit"
+        //       />
+        //       <ActionButton 
+        //         actionType="delete" 
+        //         actionFn={() => clickRowAction(record, "delete")} 
+        //         title="Delete"
+        //       />
+        //     </div>
+        //   ),
+        // },
     ];
 
     const data = [
@@ -112,8 +95,14 @@ export default function Companies () {
 
                     }
                 }
+                onRow={(record, rowIndex) => (
+                  {
+                    onClick: (e) => {clickRowAction(record)}
+                  }
+                )}
             />
             <CreateCompanyInfo />
+            <ViewCompanyInfo company_id={selectedRow?.key} />
         </Card>
       </div>
 
