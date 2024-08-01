@@ -92,7 +92,7 @@ export default function FamilyBackground (props:Props) {
             
             <Table dataSource={data} columns={columns} className="my-4 hidden md:block"/>
             <div className="md:hidden">
-                <CardList dataList={data} titleKey="relationship" excludeKeys={["key"]} />
+                <CardList dataList={data} titleKey="relationship" excludeKeys={["key"]} onSearch={null} />
             </div>
             <Button type="primary" htmlType="submit" className='mt-4'>
                 Save

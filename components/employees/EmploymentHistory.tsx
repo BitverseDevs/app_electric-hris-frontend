@@ -79,7 +79,7 @@ export default function EmploymentHistory (props:Props) {
             <Table dataSource={data} columns={columns} className="my-4 hidden md:block"/>
             
             <div className="md:hidden">
-                <CardList dataList={data} titleKey="position" excludeKeys={["key"]} />
+                <CardList dataList={data} titleKey="position" excludeKeys={["key"]} onSearch={null} />
             </div>
 
             <Button type="primary" htmlType="submit" className='mt-4'>

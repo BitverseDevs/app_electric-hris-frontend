@@ -2,7 +2,6 @@
 
 import ActionButton from "@/components/actions/ActionButton";
 import CreatePayrollGroup from "@/components/payrolls/payroll-group/CreatePayrollGroup";
-import EditPayrollGroup from "@/components/payrolls/payroll-group/EditPayrollGroup";
 import ViewPayrollGroup from "@/components/payrolls/payroll-group/ViewPayrollGroup";
 import { useModalStore } from "@/store/modalStore";
 import { ActionType } from "@/types";

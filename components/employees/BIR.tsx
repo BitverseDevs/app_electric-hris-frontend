@@ -95,7 +95,7 @@ export default function BIR(props:Props) {
             
             <Table dataSource={data} columns={columns} className="my-4 hidden md:block"/>
             <div className="md:hidden">
-                <CardList dataList={data} titleKey="company_name" excludeKeys={["key"]} />
+                <CardList dataList={data} titleKey="company_name" excludeKeys={["key"]} onSearch={null} />
             </div>
             <Button type="primary" htmlType="submit" className='mt-4'>
                 Save
