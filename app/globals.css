@@ -68,3 +68,7 @@ thead {
 .page-wrapper {
   @apply p-4
 }
+
+.payslip-row:nth-child(even) {
+  @apply bg-blue-100
+}
